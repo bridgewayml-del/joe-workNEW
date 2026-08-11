@@ -500,6 +500,7 @@ a:hover { color: var(--bond-800); }
   color: var(--ink); line-height: 1.4;
 }
 
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .founder { display: grid; gap: var(--r-2); align-items: start; }
 @media (min-width: 58rem) { .founder { grid-template-columns: 1.25fr 0.75fr; gap: var(--r-3); } }
 .founder__prose > * + * { margin-top: var(--r); }
