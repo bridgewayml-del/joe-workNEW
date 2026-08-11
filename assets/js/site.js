@@ -7,6 +7,39 @@
 (function () {
   'use strict';
 
+  /* Mobile nav toggle ---------------------------------------------------- */
+  var navToggle = document.querySelector('.nav-toggle');
+  var navInner = document.querySelector('.site-head__inner');
+  if (navToggle && navInner) {
+    var closeNav = function () {
+      navInner.classList.remove('is-nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    };
+    var openNav = function () {
+      navInner.classList.add('is-nav-open');
+      navToggle.setAttribute('aria-expanded', 'true');
+    };
+    navToggle.addEventListener('click', function () {
+      if (navInner.classList.contains('is-nav-open')) closeNav();
+      else openNav();
+    });
+    navInner.querySelectorAll('.nav a').forEach(function (a) {
+      a.addEventListener('click', closeNav);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeNav();
+    });
+    document.addEventListener('click', function (e) {
+      if (!navInner.classList.contains('is-nav-open')) return;
+      if (navInner.contains(e.target)) return;
+      closeNav();
+    });
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) closeNav();
+    });
+  }
+
+
   /* Footer year -------------------------------------------------------- */
   document.querySelectorAll('#year').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
