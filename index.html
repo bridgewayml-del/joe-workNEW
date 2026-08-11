@@ -77,14 +77,20 @@
 
 <header class="site-head">
   <div class="wrap site-head__inner">
-    <a class="brand" href="/"><em>Bridgeway</em>&nbsp;Medical Logistics</a>
-    <a class="headtel" href="tel:+19294545653" aria-label="Call dispatch at (929) 454-5653">(929) 454-5653</a>
+    <a class="brand" href="/">
+      <img class="brand__mark" src="/assets/img/logo-mark.svg" width="40" height="40" alt="">
+      <span class="brand__text">
+        <span class="brand__name">Bridgeway</span>
+        <span class="brand__sub">Medical Logistics</span>
+      </span>
+    </a>
     <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
       <svg class="nav-toggle__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
       </svg>
     </button>
     <nav class="nav" id="site-nav" aria-label="Main">
+      <a class="nav__call" href="tel:+19294545653" aria-label="Call dispatch at (929) 454-5653"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg>(929) 454-5653</a>
       <a href="#services">Services</a>
       <a href="#coverage">Coverage</a>
       <a href="#how">Process</a>
@@ -113,16 +119,18 @@
     </picture>
     <div class="hero__inner wrap">
       <div class="hero__copy">
-        <h1 class="display" id="hero-h">Every run holds up to an audit.</h1>
+        <h1 class="display" id="hero-h">Your Premier Partner in Medical Logistics</h1>
         <p class="lead hero__lead">
-          Dedicated point-to-point transport for laboratories, clinics, hospital
-          systems and pharmacies. One courier per run, sealed at pickup, signed
-          and timestamped at delivery.
+          Reliable, time-sensitive courier services for healthcare providers
+          across New York City, Long Island, and the Hudson Valley.
         </p>
         <div class="btn-row">
-          <a class="btn btn--call" href="tel:+19294545653"
-             aria-label="Call dispatch at (929) 454-5653"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg>(929) 454-5653</a>
-          <a class="btn btn--onphoto" href="#quote">Request a quote</a>
+          <a class="btn btn--solid btn--pickup" href="#quote">
+            Request a Pickup
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>

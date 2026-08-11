@@ -252,6 +252,7 @@ a:hover { color: var(--bond-800); }
 @media (hover: hover) and (pointer: fine) {
   .btn--solid:hover { background: var(--bond-900); border-color: var(--bond-900); color: #fff; }
 }
+.btn--pickup .i { width: 1.125rem; height: 1.125rem; }
 .btn--ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
 @media (hover: hover) and (pointer: fine) {
   .btn--ghost:hover { background: var(--ink); color: #fff; }
@@ -283,15 +284,21 @@ a:hover { color: var(--bond-800); }
   column-gap: var(--r); padding-block: var(--r-q);
 }
 .site-head__inner > .brand   { order: 1; margin-inline-end: auto; }
-.site-head__inner > .headtel { order: 2; }
 .site-head__inner > .nav     { order: 3; width: 100%; }
 
 .brand {
-  display: inline-flex; align-items: center; min-height: 2.75rem;
-  font-size: 1.125rem; font-weight: 900; letter-spacing: -0.038em;
-  color: var(--ink); text-decoration: none; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.625rem; min-height: 2.75rem;
+  color: var(--ink); text-decoration: none;
 }
-.brand em { font-style: normal; color: var(--bond-800); }
+.brand__mark { width: 2.5rem; height: 2.5rem; flex: none; }
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand__name {
+  font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink);
+}
+.brand__sub {
+  font-size: 0.625rem; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--bond-600);
+}
 
 .nav {
   display: flex; align-items: center; gap: 0 var(--r);
@@ -307,14 +314,12 @@ a:hover { color: var(--bond-800); }
   text-decoration: underline; text-decoration-color: var(--seal-red);
   text-decoration-thickness: 2px; text-underline-offset: 0.3em;
 }
-
-.headtel {
-  display: inline-flex; align-items: center; min-height: 2.75rem;
-  font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em;
-  font-variant-numeric: tabular-nums;
-  color: var(--ink); text-decoration: none; white-space: nowrap;
+.nav__call {
+  font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+  color: var(--bond-800);
 }
-.headtel:hover { color: var(--seal-red); }
+.nav__call:hover { color: var(--seal-red); }
+.nav__call .i { width: 1.05rem; height: 1.05rem; margin-inline-end: 0.4rem; }
 
 .nav-toggle {
   display: none;
@@ -335,8 +340,8 @@ a:hover { color: var(--bond-800); }
 
 @media (min-width: 48rem) {
   .site-head__inner { flex-wrap: nowrap; padding-block: 0; min-height: 4.5rem; }
-  .site-head__inner > .nav   { order: 2; width: auto; border-top: 0; margin-top: 0; margin-inline-end: var(--r-2); }
-  .site-head__inner > .headtel { order: 3; }
+  .site-head__inner > .nav { order: 2; width: auto; border-top: 0; margin-top: 0; }
+  .nav__call { padding-inline-end: var(--r-h); border-inline-end: 1px solid var(--rule); margin-inline-end: var(--r-h); }
 }
 
 /* 08 · Hero (full-bleed banner) ========================================= */
