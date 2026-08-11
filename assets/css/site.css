@@ -290,7 +290,7 @@ a:hover { color: var(--bond-800); }
   display: inline-flex; align-items: center; min-height: 2.75rem;
   color: var(--ink); text-decoration: none;
 }
-.brand__logo { height: 2.25rem; width: auto; display: block; }
+.brand__logo { height: 3rem; width: auto; display: block; }
 
 .nav {
   display: flex; align-items: center; gap: 0 var(--r);
