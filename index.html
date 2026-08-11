@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Bridgeway Medical Logistics | Medical Courier, NYC and Long Island</title>
+<meta name="description" content="B2B medical courier for labs, clinics, hospital systems and pharmacies across New York City, Long Island and the Hudson Valley. STAT specimen transport, scheduled lab routes, cold-chain pharma, records under chain of custody.">
+<link rel="canonical" href="https://bridgewayml.com/">
+
+<!-- ==========================================================================
+     TWO KINDS OF CONTENT ON THIS PAGE. THE DIFFERENCE MATTERS.
+
+     1. FACTS ABOUT THE WORK. Regulatory citations, temperature classes,
+        packaging requirements, geography. Independently verifiable and true
+        regardless of how Bridgeway operates. These ship as written.
+
+     2. CLAIMS ABOUT BRIDGEWAY. What Joseph holds, does, or commits to.
+        Every one is tagged data-verify="pending":
+
+            grep -rn 'data-verify' *.html
+
+        Confirm it, delete the attribute. If it is not true, delete the whole
+        element. Never publish an unconfirmed compliance claim to a hospital
+        procurement team.
+
+     NOTHING here states an insurance limit, a certification number, a
+     response time or a temperature reading that has not been confirmed.
+     Those are exactly the numbers a client's procurement file holds you to.
+
+     Domain, phone, email and dispatch address are the client's real
+     contact details as of 2026-08-10, not placeholders.
+     ========================================================================== -->
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bridgeway Medical Logistics">
+<meta property="og:title" content="Bridgeway Medical Logistics | Medical Courier, NYC and Long Island">
+<meta property="og:description" content="STAT specimen transport, scheduled lab routes and cold-chain pharma across New York City, Long Island and the Hudson Valley. Documented chain of custody on every run.">
+<meta property="og:url" content="https://bridgewayml.com/">
+<meta property="og:image" content="https://bridgewayml.com/assets/img/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A courier's gloved hands fastening a numbered security seal onto a sealed medical specimen transport cooler at the back of a cargo van.">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3C5D">
+
+<link rel="preload" href="/assets/fonts/librefranklin-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+
+<!-- Motion boot. Adding the class here (rather than from motion.js) is what
+     prevents a flash of un-animated content: the hide rules apply on the very
+     first paint. The timeout is the safety net -- if motion.js has not
+     confirmed it is alive, the class comes off and the page is simply static
+     and complete. Content is never left depending on a script that failed. -->
+<script>
+  (function () {
+    var r = document.documentElement;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    r.classList.add('js-motion');
+    setTimeout(function () {
+      if (!window.__bwMotionReady) r.classList.remove('js-motion');
+    }, 2000);
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Tabler Icons (MIT). Inlined as one sprite: no extra request, no icon
+     font, and no hand-rolled paths. Referenced by id from each section below. -->
+<svg class="sprite" aria-hidden="true" focusable="false"><symbol id="i-ambulance" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-11a1 1 0 0 1 1 -1h9v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /> <path d="M6 10h4m-2 -2v4" /></symbol><symbol id="i-calendar-clock" viewBox="0 0 24 24"><path d="M10.5 21h-4.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v3" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h10" /> <path d="M14 18a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M18 16.5v1.5l.5 .5" /></symbol><symbol id="i-temperature-snow" viewBox="0 0 24 24"><path d="M4 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 1 0 -4 0v8.5" /> <path d="M4 9h4" /> <path d="M14.75 4l1 2h2.25" /> <path d="M17 4l-3 5l2 3" /> <path d="M20.25 10l-1.25 2l1.25 2" /> <path d="M22 12h-6l-2 3" /> <path d="M18 18h-2.25l-1 2" /> <path d="M17 20l-3 -5h-1" /> <path d="M12 9l2.088 .008" /></symbol><symbol id="i-vaccine-bottle" viewBox="0 0 24 24"><path d="M9 4a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -1" /> <path d="M10 6v.98c0 .877 -.634 1.626 -1.5 1.77c-.866 .144 -1.5 .893 -1.5 1.77v8.48a2 2 0 0 0 2 2h6a2 2 0 0 0 2 -2v-8.48c0 -.877 -.634 -1.626 -1.5 -1.77a1.795 1.795 0 0 1 -1.5 -1.77v-.98" /> <path d="M7 12h10" /> <path d="M7 18h10" /> <path d="M11 15h2" /></symbol><symbol id="i-files" viewBox="0 0 24 24"><path d="M15 3v4a1 1 0 0 0 1 1h4" /> <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" /> <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" /></symbol><symbol id="i-package" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /> <path d="M16 5.25l-8 4.5" /></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6" /> <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /> <path d="M8 11v-4a4 4 0 1 1 8 0v4" /></symbol><symbol id="i-biohazard" viewBox="0 0 24 24"><path d="M10 12a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M11.939 14c0 .173 .048 .351 .056 .533l0 .217a4.75 4.75 0 0 1 -4.533 4.745l-.217 0m-4.75 -4.75a4.75 4.75 0 0 1 7.737 -3.693m6.513 8.443a4.75 4.75 0 0 1 -4.69 -5.503l-.06 0m1.764 -2.944a4.75 4.75 0 0 1 7.731 3.477l0 .217m-11.195 -3.813a4.75 4.75 0 0 1 -1.828 -7.624l.164 -.172m6.718 0a4.75 4.75 0 0 1 -1.665 7.798" /></symbol><symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" /> <path d="M12 12l8 -4.5" /> <path d="M12 12l0 9" /> <path d="M12 12l-8 -4.5" /></symbol><symbol id="i-clipboard-check" viewBox="0 0 24 24"><path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2" /> <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2" /> <path d="M9 14l2 2l4 -4" /></symbol><symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /></symbol><symbol id="i-clock-hour-4" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M12 12l3 2" /> <path d="M12 7v5" /></symbol><symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 1 1 16 0v3" /> <path d="M18 19c0 1.657 -2.686 3 -6 3" /> <path d="M4 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3" /> <path d="M15 14a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a2 2 0 0 1 -2 -2v-3" /></symbol><symbol id="i-map-pin" viewBox="0 0 24 24"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" /></symbol><symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2" /></symbol><symbol id="i-circle-check" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></symbol><symbol id="i-hourglass-high" viewBox="0 0 24 24"><path d="M6.5 7h11" /> <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1" /> <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1" /></symbol><symbol id="i-snowflake" viewBox="0 0 24 24"><path d="M10 4l2 1l2 -1" /> <path d="M12 2v6.5l3 1.72" /> <path d="M17.928 6.268l.134 2.232l1.866 1.232" /> <path d="M20.66 7l-5.629 3.25l.01 3.458" /> <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" /> <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" /> <path d="M14 20l-2 -1l-2 1" /> <path d="M12 22v-6.5l-3 -1.72" /> <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" /> <path d="M3.34 17l5.629 -3.25l-.01 -3.458" /> <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" /> <path d="M3.34 7l5.629 3.25l2.99 -1.738" /></symbol><symbol id="i-thermometer" viewBox="0 0 24 24"><path d="M19 5a2.828 2.828 0 0 1 0 4l-8 8h-4v-4l8 -8a2.828 2.828 0 0 1 4 0" /> <path d="M16 7l-1.5 -1.5" /> <path d="M13 10l-1.5 -1.5" /> <path d="M10 13l-1.5 -1.5" /> <path d="M7 17l-3 3" /></symbol><symbol id="i-route" viewBox="0 0 24 24"><path d="M3 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /> <path d="M19 7a2 2 0 1 0 0 -4a2 2 0 0 0 0 4" /> <path d="M11 19h5.5a3.5 3.5 0 0 0 0 -7h-8a3.5 3.5 0 0 1 0 -7h4.5" /></symbol><symbol id="i-file-check" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" /> <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" /> <path d="M9 15l2 2l4 -4" /></symbol><symbol id="i-truck-delivery" viewBox="0 0 24 24"><path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /> <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5" /> <path d="M3 9l4 0" /></symbol><symbol id="i-building-hospital" viewBox="0 0 24 24"><path d="M3 21l18 0" /> <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" /> <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" /> <path d="M10 9l4 0" /> <path d="M12 7l0 4" /></symbol><symbol id="i-microscope" viewBox="0 0 24 24"><path d="M5 21h14" /> <path d="M6 18h2" /> <path d="M7 18v3" /> <path d="M9 11l3 3l6 -6l-3 -3l-6 6" /> <path d="M10.5 12.5l-1.5 1.5" /> <path d="M17 3l3 3" /> <path d="M12 21a6 6 0 0 0 3.715 -10.712" /></symbol><symbol id="i-pill" viewBox="0 0 24 24"><path d="M4.5 12.5l8 -8a4.94 4.94 0 0 1 7 7l-8 8a4.94 4.94 0 0 1 -7 -7" /> <path d="M8.5 8.5l7 7" /></symbol><symbol id="i-stethoscope" viewBox="0 0 24 24"><path d="M6 4h-1a2 2 0 0 0 -2 2v3.5a5.5 5.5 0 0 0 11 0v-3.5a2 2 0 0 0 -2 -2h-1" /> <path d="M8 15a6 6 0 1 0 12 0v-3" /> <path d="M11 3v2" /> <path d="M6 3v2" /> <path d="M18 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /></symbol><symbol id="i-user-square" viewBox="0 0 24 24"><path d="M9 10a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M6 21v-1a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v1" /> <path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-14" /></symbol><symbol id="i-scissors" viewBox="0 0 24 24"><path d="M3 7a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M3 17a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M8.6 8.6l10.4 10.4" /> <path d="M8.6 15.4l10.4 -10.4" /></symbol><symbol id="i-home-heart" viewBox="0 0 24 24"><path d="M21 12l-9 -9l-9 9h2v7a2 2 0 0 0 2 2h6" /> <path d="M9 21v-6a2 2 0 0 1 2 -2h2c.39 0 .754 .112 1.061 .304" /> <path d="M19 21.5l2.518 -2.58a1.74 1.74 0 0 0 0 -2.413a1.627 1.627 0 0 0 -2.346 0l-.168 .172l-.168 -.172a1.627 1.627 0 0 0 -2.346 0a1.74 1.74 0 0 0 0 2.412l2.51 2.59l0 -.009" /></symbol><symbol id="i-scan" viewBox="0 0 24 24"><path d="M5 12h14" /> <path d="M3 7v-2a2 2 0 0 1 2 -2h2" /> <path d="M3 17v2a2 2 0 0 0 2 2h2" /> <path d="M17 3h2a2 2 0 0 1 2 2v2" /> <path d="M17 21h2a2 2 0 0 0 2 -2v-2" /></symbol><symbol id="i-droplet" viewBox="0 0 24 24"><path d="M7.502 19.423c2.602 2.105 6.395 2.105 8.996 0c2.602 -2.105 3.262 -5.708 1.566 -8.546l-4.89 -7.26c-.42 -.625 -1.287 -.803 -1.936 -.397a1.376 1.376 0 0 0 -.41 .397l-4.893 7.26c-1.695 2.838 -1.035 6.441 1.567 8.546" /></symbol><symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3 8l4 -16l3 8h4" /></symbol><symbol id="i-droplets" viewBox="0 0 24 24"><path d="M4.072 20.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798" /> <path d="M16.072 20.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798" /> <path d="M10.072 10.3a2.999 2.999 0 0 0 3.856 0a3.002 3.002 0 0 0 .67 -3.798l-2.095 -3.227a.6 .6 0 0 0 -1.005 0l-2.098 3.227a3.003 3.003 0 0 0 .671 3.798l.001 0" /></symbol><symbol id="i-dots" viewBox="0 0 24 24"><path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></symbol></svg>
+
+
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="/"><em>Bridgeway</em>&nbsp;Medical Logistics</a>
+    <a class="headtel" href="tel:+19294545653" aria-label="Call dispatch at (929) 454-5653">(929) 454-5653</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#how">Process</a>
+      <a href="#compliance">Compliance</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero ===============================================================
+       Full-bleed banner. The photograph is a real <img> behind a navy
+       gradient scrim; white text sits on the dark left side. Content is in
+       normal flow so it renders with or without the image, and the scrim
+       guarantees contrast even where the photo is light (the white van).
+       ==================================================================== -->
+  <section class="hero" aria-labelledby="hero-h">
+    <picture class="hero__bg">
+      <source type="image/webp" srcset="/assets/img/lab-delivery-900.webp 900w, /assets/img/lab-delivery.webp 1536w"
+              sizes="100vw">
+      <img src="/assets/img/lab-delivery.jpg"
+           srcset="/assets/img/lab-delivery-900.jpg 900w, /assets/img/lab-delivery.jpg 1536w"
+           sizes="100vw" width="1536" height="1024" fetchpriority="high"
+           alt="A Bridgeway courier in gloves carrying a sealed specimen cooler toward a clinical laboratory receiving entrance, a marked delivery van at the kerb.">
+    </picture>
+    <div class="hero__inner wrap">
+      <div class="hero__copy">
+        <h1 class="display" id="hero-h">Every run holds up to an audit.</h1>
+        <p class="lead hero__lead">
+          Dedicated point-to-point transport for laboratories, clinics, hospital
+          systems and pharmacies. One courier per run, sealed at pickup, signed
+          and timestamped at delivery.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--call" href="tel:+19294545653"
+             aria-label="Call dispatch at (929) 454-5653"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg>(929) 454-5653</a>
+          <a class="btn btn--onphoto" href="#quote">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services ========================================================== -->
+  <section class="section" id="services" aria-labelledby="svc-h">
+    <div class="wrap">
+      <div class="svc__intro">
+        <div class="section-head section-head--rule">
+          <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-route"></use></svg>What we run</p><h2 id="svc-h">Six service lines</h2>
+          <p class="lead muted">Specialized medical courier work, each line built for a different kind of run.</p>
+        </div>
+        <div class="svc__photo" aria-hidden="true">
+          <picture>
+            <source type="image/webp" srcset="/assets/img/coldchain.webp">
+            <img src="/assets/img/coldchain.jpg" width="1100" height="733" loading="lazy" alt="">
+          </picture>
+        </div>
+      </div>
+
+      <div class="svc__grid">
+        <div class="svc">
+          <div class="svc__head"><span class="badge badge--stat"><svg class="i" aria-hidden="true"><use href="#i-ambulance"></use></svg></span><h3>STAT and emergency runs</h3></div>
+          <p>Immediate, dedicated pickup for time-critical specimens, blood products, and urgent hospital deliveries.</p>
+          <p class="svc__turn svc__turn--stat"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg><span>Dispatched on call</span></p>
+        </div>
+        <div class="svc">
+          <div class="svc__head"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-calendar-clock"></use></svg></span><h3>Scheduled lab routes</h3></div>
+          <p>Daily or recurring pickups for hospitals, clinics, labs, and physician offices, on a fixed window.</p>
+          <p class="svc__turn"><svg class="i" aria-hidden="true"><use href="#i-clock-hour-4"></use></svg><span>Fixed daily window</span></p>
+        </div>
+        <div class="svc" data-verify="pending">
+          <div class="svc__head"><span class="badge badge--cold"><svg class="i" aria-hidden="true"><use href="#i-temperature-snow"></use></svg></span><h3>Cold-chain and biologics</h3></div>
+          <p>Validated temperature-controlled transport for vaccines, biologics, blood products, and lab samples.</p>
+          <p class="svc__turn"><svg class="i" aria-hidden="true"><use href="#i-thermometer"></use></svg><span>Temperature logged</span></p>
+        </div>
+        <div class="svc" data-verify="pending">
+          <div class="svc__head"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-vaccine-bottle"></use></svg></span><h3>Pharmacy and infusion delivery</h3></div>
+          <p>Secure delivery of prescriptions, specialty medications, and infusion therapies, signed on receipt.</p>
+          <p class="svc__turn"><svg class="i" aria-hidden="true"><use href="#i-clock-hour-4"></use></svg><span>Time-definite</span></p>
+        </div>
+        <div class="svc">
+          <div class="svc__head"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-files"></use></svg></span><h3>Records and imaging</h3></div>
+          <p>Confidential transport of medical records, imaging, pathology slides, and sensitive documents.</p>
+          <p class="svc__turn"><svg class="i" aria-hidden="true"><use href="#i-file-check"></use></svg><span>Same day</span></p>
+        </div>
+        <div class="svc">
+          <div class="svc__head"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-package"></use></svg></span><h3>Equipment and supply transfers</h3></div>
+          <p>Inter-site transport of medical equipment, supplies, diagnostic devices, and reagents.</p>
+          <p class="svc__turn"><svg class="i" aria-hidden="true"><use href="#i-truck-delivery"></use></svg><span>Scheduled or on call</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why choose us ==================================================== -->
+  <section class="section section--band" id="why" aria-labelledby="why-h">
+    <div class="wrap why__grid">
+      <figure class="why__fig">
+        <picture>
+          <source type="image/webp" srcset="/assets/img/equipment.webp">
+          <img src="/assets/img/equipment.jpg" width="760" height="507" loading="lazy"
+               alt="A Bridgeway courier wheeling shrink-wrapped medical equipment on a dolly toward a hospital patient care unit entrance, a marked delivery van alongside.">
+        </picture>
+      </figure>
+      <div class="why__body">
+        <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg>Why facilities choose us</p>
+        <h2 id="why-h">Built for medical freight, not parcels</h2>
+        <p class="lead muted">A general courier optimises for stops per hour. That is the wrong instinct for a specimen with a stability window.</p>
+        <ul class="why__list">
+          <li><svg class="i" aria-hidden="true"><use href="#i-route"></use></svg><div><h3>One courier per run</h3><p>No consolidation, no hand-offs, no warehouse stop where a cooler waits for a second van.</p></div></li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-thermometer"></use></svg><div><h3>Temperature controlled</h3><p>Validated containers with the reading logged for the run and reported with the manifest.</p></div></li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg><div><h3>Chain of custody</h3><p>Sealed at pickup, signed and timestamped at delivery, the record retained and sent on request.</p></div></li>
+          <li data-verify="pending"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg><div><h3>Bonded and insured</h3><p>Certificate of insurance issued to your facility, named to your entity, renewed before it lapses.</p></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works ====================================================== -->
+  <section class="section" id="how" aria-labelledby="how-h">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-route"></use></svg>How it works</p>
+        <h2 id="how-h">From call to proof of delivery</h2>
+        <p class="lead muted">Four steps on every run, whether it is a STAT dispatch or a standing daily route.</p>
+      </div>
+      <ol class="steps">
+        <li class="step"><span class="step__num">1</span><span class="step__ic badge"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg></span><h3>Schedule a pickup</h3><p>Call dispatch or send the two addresses. You get a window quoted for that specific run.</p></li>
+        <li class="step"><span class="step__num">2</span><span class="step__ic badge"><svg class="i" aria-hidden="true"><use href="#i-truck-delivery"></use></svg></span><h3>Courier dispatched</h3><p>One named courier is assigned. Nothing else rides with your specimen.</p></li>
+        <li class="step"><span class="step__num">3</span><span class="step__ic badge"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg></span><h3>Secure transport</h3><p>Sealed and logged at pickup, held at temperature, driven direct with no route deviation.</p></li>
+        <li class="step"><span class="step__num">4</span><span class="step__ic badge"><svg class="i" aria-hidden="true"><use href="#i-file-check"></use></svg></span><h3>Proof of delivery</h3><p>Signed and timestamped at the receiving department. The closed manifest is yours on request.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Coverage ==========================================================
+       The map is real geography, not a schematic: county boundaries come from
+       US Census cartographic data (500k), projected to Web Mercator and
+       simplified. Served counties are filled, neighbours are drawn unshaded
+       so it reads as a map rather than floating shapes.
+
+       The ZIP check is also real. 394 ZIPs across the nine served counties,
+       from a public state/county/ZIP crosswalk, embedded in site.js so the
+       lookup needs no request. An unrecognised ZIP is never told "no": it is
+       told to call dispatch, because a wrong no loses a booking.
+       ================================================================== -->
+  <section class="section section--band cov" id="coverage" aria-labelledby="cov-h">
+    <div class="wrap">
+
+      <div class="cov__head">
+        <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-map-pin"></use></svg>Coverage area</p>
+        <h2 id="cov-h" class="has-rule">Where we deliver</h2>
+        <p class="lead muted">
+          A dedicated medical courier network across New York City, Long
+          Island and the lower Hudson Valley, with custom regional routes
+          available outside that footprint.
+        </p>
+      </div>
+
+      <div class="cov__layout">
+        <figure class="cov__map">
+          <svg class="map__svg" viewBox="0 0 980 700" role="img" aria-labelledby="mapt mapd" xmlns="http://www.w3.org/2000/svg">
+<title id="mapt">Bridgeway service network</title>
+<desc id="mapd">A logistics network map showing New York City -- Manhattan, Brooklyn, Queens, the Bronx and Staten Island -- Nassau and Suffolk Counties on Long Island, and Westchester, Rockland and Putnam Counties, connected by delivery routes between hub markers. Surrounding areas, including northern New Jersey, are shown unshaded for orientation and are not served; the eastern half of Suffolk County extends beyond this view.</desc>
+<defs>
+<linearGradient id="mapLand" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2E93F0"/><stop offset="100%" stop-color="#0A5FB0"/></linearGradient>
+<radialGradient id="mapWater" cx="30%" cy="24%" r="90%"><stop offset="0%" stop-color="#F4F9FE"/><stop offset="100%" stop-color="#DCE9F7"/></radialGradient>
+<filter id="hubGlow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect class="map__water" width="980" height="700"/>
+<path class="map__ctx" d="M77.7 250.1L85.1 254.3L64.9 306.7L100.1 327.8L100.4 324.6L110.7 332.8L108.2 344.1L114.6 401.4L73.3 372.9L68.7 371.5L64.8 365.3L54.3 315.8L51.0 317.7L49.1 316.1L42.2 315.3L-17.4 276.8L31.2 221.7L77.7 250.1Z"/>
+<path class="map__ctx" d="M85.1 254.3L195.2 318.3L198.3 318.4L189.8 355.7L184.3 372.3L165.4 411.5L154.6 399.7L144.8 407.1L108.4 417.1L111.7 411.4L112.4 402.2L114.6 401.4L108.2 344.1L110.7 332.8L100.4 324.6L100.1 327.8L64.9 306.7L85.1 254.3Z"/>
+<path class="map__ctx" d="M102.3 432.0L101.9 436.4L103.3 440.7L119.3 440.2L119.2 452.8L120.8 456.2L112.3 469.6L89.3 463.9L81.9 454.2L59.5 447.2L53.7 451.4L48.8 448.6L45.4 449.6L35.0 441.4L29.0 439.2L42.3 361.4L64.8 365.3L68.7 371.5L73.3 372.9L114.6 401.4L112.4 402.2L111.7 411.4L102.3 432.0Z"/>
+<path class="map__ctx" d="M165.4 411.5L155.8 431.1L152.0 453.2L147.1 452.6L142.6 459.6L131.4 469.9L128.8 476.4L129.7 479.4L127.4 481.2L109.9 484.8L103.5 483.8L120.8 456.2L119.2 452.8L119.3 440.2L103.3 440.7L101.9 436.4L102.8 429.8L108.2 420.2L108.4 417.1L144.8 407.1L154.6 399.7L165.4 411.5Z"/>
+<path class="map__ctx" d="M177.2 40.6L179.3 4.3L181.1 -3.5L179.6 -10.7L181.6 -27.8L174.1 -105.2L185.6 -188.5L263.1 -154.1L328.2 -141.2L338.9 -174.8L342.3 -174.8L327.1 70.0L184.2 88.2L167.3 111.4L160.7 103.1L161.5 88.7L177.2 40.6Z"/>
+<path class="map__ctx" d="M331.6 4.7L335.3 5.0L358.5 86.8L397.5 95.5L399.1 97.0L404.9 97.4L441.3 120.0L449.4 126.7L448.3 130.9L453.5 137.3L457.8 137.2L466.7 152.5L473.9 161.4L486.9 171.0L488.2 173.8L520.2 207.2L509.6 221.3L496.9 218.5L486.7 226.1L477.5 236.3L475.6 246.4L468.8 248.3L454.7 241.8L454.4 239.7L451.9 238.9L443.1 243.0L434.0 250.2L431.6 249.6L427.1 257.8L422.0 262.0L413.3 257.1L397.8 265.5L383.0 268.3L376.0 275.9L373.2 276.6L360.8 290.5L355.4 290.3L349.0 293.0L345.8 300.2L340.2 294.5L331.8 298.9L331.9 303.2L329.8 308.0L327.6 309.4L327.1 303.6L325.3 302.1L315.8 309.2L313.8 311.9L313.0 316.3L308.1 316.6L307.7 312.1L303.9 309.5L301.0 310.0L287.0 316.0L282.1 324.0L283.0 311.6L257.1 269.9L343.9 217.3L319.7 178.6L331.6 4.7Z"/>
+<path class="map__ctx" d="M-13.0 540.5L-22.0 530.3L-3.4 504.8L-1.1 506.6L53.2 500.3L57.5 508.3L69.3 503.4L78.6 505.0L84.5 502.6L87.5 507.0L84.6 522.9L83.4 524.5L78.7 523.6L72.6 528.1L71.6 531.5L73.5 541.5L65.7 551.7L64.1 556.8L65.9 564.5L67.9 567.9L81.0 573.2L21.1 650.5L21.3 654.6L-2.5 667.8L-10.8 666.9L-42.1 644.6L-58.7 610.2L-12.7 563.3L-2.2 555.5L-13.0 540.5Z"/>
+<path class="map__ctx" d="M87.5 507.0L84.5 502.6L78.6 505.0L69.3 503.4L57.5 508.3L53.2 500.3L-1.1 506.6L-3.4 504.8L5.6 499.8L13.0 491.3L16.1 483.8L-2.7 470.1L29.0 439.2L35.0 441.4L45.4 449.6L48.8 448.6L53.7 451.4L59.5 447.2L81.9 454.2L89.3 463.9L112.3 469.6L103.5 483.8L94.8 482.9L89.1 489.9L87.5 507.0Z"/>
+<path class="map__ctx" d="M459.7 75.6L456.6 56.0L463.5 55.6L494.3 32.7L502.1 28.8L508.3 29.3L507.3 23.2L513.5 22.5L520.8 17.3L533.9 56.1L602.7 45.8L605.8 90.7L609.1 89.6L604.8 118.7L628.7 113.8L678.6 197.2L675.3 199.7L666.8 191.4L662.5 189.7L657.3 191.1L650.5 189.6L637.5 192.4L634.3 190.9L630.9 191.9L626.5 196.3L626.3 199.3L624.5 201.4L617.4 202.5L616.7 197.9L613.2 195.6L609.5 197.7L600.8 192.0L590.6 193.0L579.1 198.8L576.2 196.7L568.8 196.8L566.6 200.9L556.9 203.4L551.9 202.8L548.4 200.7L552.5 195.3L547.4 184.5L543.2 185.8L542.9 191.0L537.7 195.9L528.3 199.1L520.2 207.2L488.2 173.8L486.9 171.0L473.9 161.4L466.7 152.5L457.8 137.2L453.5 137.3L450.0 133.5L448.3 130.9L449.4 126.7L441.3 120.0L404.9 97.4L399.0 90.0L401.9 80.3L459.7 75.6Z"/>
+<path class="map__zone" d="M247.7 510.9L266.8 437.4L266.3 433.0L250.4 419.9L242.7 410.4L247.8 400.9L247.7 398.2L256.9 386.0L257.5 384.1L256.1 380.1L262.1 377.9L275.6 384.0L282.6 380.8L283.1 374.1L290.4 364.7L296.2 364.9L313.0 356.7L320.8 359.8L331.0 357.2L332.5 357.9L337.8 355.4L338.8 353.2L354.0 394.8L365.0 471.3L364.8 499.8L315.7 512.1L298.5 510.2L285.8 512.5L247.6 511.8L247.7 510.9Z"><title>Nassau</title></path>
+<path class="map__zone" d="M207.1 459.9L197.4 465.8L194.6 459.6L188.5 453.4L185.8 444.6L182.9 443.6L179.5 440.0L173.9 440.0L176.7 433.5L183.7 424.0L182.5 422.7L183.7 420.5L186.2 421.6L192.4 415.0L191.7 412.5L199.5 415.4L199.7 416.7L206.4 416.9L209.3 412.0L220.7 409.3L227.6 408.4L233.9 410.8L236.5 410.4L238.1 413.1L240.0 413.0L242.7 410.4L250.4 419.9L266.3 433.0L266.8 437.4L247.7 510.9L248.1 508.9L240.4 508.8L229.1 511.7L183.9 530.2L184.5 523.1L182.5 520.3L213.9 509.8L210.1 478.9L211.8 474.6L208.2 466.1L207.1 459.9Z"><title>Queens</title></path>
+<path class="map__zone" d="M179.1 212.5L185.0 221.0L192.8 240.0L197.8 244.9L200.7 254.7L197.9 278.4L199.9 299.4L198.3 318.4L195.2 318.3L77.7 250.1L167.3 164.9L179.1 212.5Z"><title>Rockland</title></path>
+<path class="map__zone" d="M354.0 394.8L338.8 353.2L340.7 344.2L343.0 342.2L350.6 346.2L360.2 347.5L362.6 349.9L363.0 353.8L371.1 354.4L372.2 352.1L372.9 338.6L375.7 338.0L382.3 346.3L389.9 351.4L392.5 352.0L397.5 350.0L410.4 352.4L433.7 361.5L462.1 350.4L465.0 332.9L475.8 330.2L486.0 329.7L499.4 334.8L500.6 333.7L516.3 332.7L554.5 334.4L576.5 331.2L594.9 333.3L599.9 328.6L616.0 323.8L624.9 321.8L633.5 322.9L661.8 318.2L668.8 312.6L670.4 309.8L684.3 299.4L700.0 292.6L711.4 276.7L721.0 275.8L728.5 271.9L743.0 254.4L754.9 251.1L766.0 244.0L770.3 242.7L774.1 244.8L782.2 241.5L784.7 242.3L784.9 243.7L779.3 252.8L775.2 256.8L762.7 264.4L762.8 255.2L760.6 252.4L756.4 252.8L753.4 255.1L750.3 260.7L750.4 266.9L756.7 275.5L763.6 279.1L769.8 279.4L771.1 281.1L768.8 285.2L772.1 292.9L776.8 297.3L787.8 296.3L797.6 301.9L801.6 301.8L811.4 292.1L814.6 292.7L820.4 298.4L820.4 305.8L827.9 317.1L832.9 321.0L835.3 321.1L839.7 318.7L842.1 312.8L847.3 312.6L848.6 314.8L850.8 314.0L850.7 307.4L852.3 306.5L856.4 307.3L863.8 303.8L869.3 298.4L880.7 294.7L882.9 291.6L883.4 283.7L897.6 279.3L904.8 279.2L908.2 281.6L917.1 281.0L920.0 284.0L913.7 292.5L903.2 298.2L891.9 301.0L828.5 330.1L728.9 379.5L702.6 390.7L602.3 427.8L597.0 428.8L563.4 442.2L495.4 473.4L441.1 490.0L422.1 494.4L406.4 494.7L401.8 487.7L390.4 490.2L364.8 499.8L365.0 471.3L354.0 394.8Z"><title>Suffolk</title></path>
+<path class="map__zone" d="M236.5 410.4L233.9 410.8L227.6 408.4L220.7 409.3L209.3 412.0L206.4 416.9L199.7 416.7L199.5 415.4L191.7 412.5L193.6 375.0L192.1 373.6L190.7 375.3L184.3 372.3L189.8 355.7L223.0 368.6L237.4 372.8L235.5 383.4L238.2 392.5L237.3 393.5L235.7 391.1L234.3 384.6L231.7 388.3L229.1 387.6L227.0 388.9L226.0 394.3L227.3 398.9L232.5 403.4L236.5 410.4Z"><title>The Bronx</title></path>
+<path class="map__zone" d="M207.1 459.9L208.2 466.1L211.8 474.6L210.1 478.9L213.9 509.8L182.5 520.3L178.4 517.0L163.8 518.4L160.0 518.2L156.4 516.4L156.1 514.7L160.1 508.8L159.5 506.5L156.8 504.1L149.1 502.4L146.7 498.4L145.7 492.8L149.3 482.7L154.2 476.8L152.6 466.4L153.9 467.2L159.3 462.7L162.6 455.7L171.4 453.4L174.3 446.4L173.9 440.0L179.5 440.0L182.9 443.6L185.8 444.6L188.5 453.4L194.6 459.6L197.4 465.8L207.1 459.9Z"><title>Brooklyn</title></path>
+<path class="map__zone" d="M173.9 440.0L174.3 446.4L171.4 453.4L162.6 455.7L159.3 462.7L153.9 467.2L151.9 463.7L154.8 456.8L152.0 453.2L155.8 431.1L184.3 372.3L190.7 375.3L192.1 373.6L193.6 376.3L192.4 415.0L186.2 421.6L183.7 420.5L182.5 422.7L183.7 424.0L176.7 433.5L173.9 440.0Z"><title>Manhattan</title></path>
+<path class="map__zone" d="M166.9 166.3L167.3 111.4L184.2 88.2L327.1 70.0L322.0 145.4L166.9 166.3Z"><title>Putnam</title></path>
+<path class="map__zone" d="M109.5 534.9L97.7 542.1L96.2 541.7L86.2 546.9L82.9 550.1L78.1 550.7L73.3 553.2L70.5 550.3L70.0 547.6L71.2 544.8L74.7 541.5L75.1 536.7L72.9 531.0L79.6 525.5L83.8 525.6L86.0 522.8L88.4 509.5L91.5 503.6L91.2 496.9L89.2 495.3L89.7 489.7L93.6 484.7L96.9 483.1L106.5 486.3L130.1 481.7L133.8 481.9L136.0 485.2L136.8 493.3L141.9 502.8L139.7 507.5L121.2 529.4L117.6 531.3L112.1 537.2L109.5 534.9Z"><title>Staten Island</title></path>
+<path class="map__zone" d="M332.6 224.1L257.1 269.9L283.0 311.6L282.6 326.6L281.1 331.8L274.7 334.5L271.7 342.7L259.3 348.9L246.8 358.0L237.4 372.8L223.0 368.6L189.8 355.7L198.3 318.4L199.9 299.4L197.9 278.4L200.7 254.7L197.8 244.9L192.8 240.0L185.0 221.0L179.1 212.5L166.9 166.3L322.0 145.4L319.7 178.6L343.9 217.3L332.6 224.1Z"><title>Westchester</title></path>
+<g class="map__routes">
+<path class="map__route" d="M165.8 434.9 Q173.1 435.4 180.5 467.8"/>
+<path class="map__route" d="M165.8 434.9 Q187.2 396.3 208.6 389.8"/>
+<path class="map__route" d="M165.8 434.9 Q199.6 423.7 233.3 444.4"/>
+<path class="map__route" d="M180.5 467.8 Q206.9 440.1 233.3 444.4"/>
+<path class="map__route" d="M165.8 434.9 Q136.6 458.5 107.5 514.1"/>
+<path class="map__route" d="M165.8 434.9 Q267.0 408.4 368.1 413.8"/>
+<path class="map__route" d="M208.6 389.8 Q226.6 329.4 244.7 301.1"/>
+<path class="map__route" d="M244.7 301.1 Q217.2 271.7 189.7 274.3"/>
+<path class="map__route" d="M244.7 301.1 Q258.8 192.2 273.0 115.4"/>
+</g>
+<g class="map__hubs">
+<circle class="map__hub-glow" cx="165.8" cy="434.9" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="165.8" y1="434.9" x2="101.8" y2="402.9"/>
+<circle class="map__hub" cx="165.8" cy="434.9" r="6.5"/>
+<rect class="map__chip" x="51.9" y="389.4" width="99.8" height="27" rx="13.5"/>
+<text class="map__hub-label" x="101.8" y="408.1" text-anchor="middle" font-size="16">Manhattan</text>
+<circle class="map__hub-glow" cx="180.5" cy="467.8" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="180.5" y1="467.8" x2="196.5" y2="519.8"/>
+<circle class="map__hub" cx="180.5" cy="467.8" r="6.5"/>
+<rect class="map__chip" x="150.7" y="506.3" width="91.6" height="27" rx="13.5"/>
+<text class="map__hub-label" x="196.5" y="524.9" text-anchor="middle" font-size="16">Brooklyn</text>
+<circle class="map__hub-glow" cx="233.3" cy="444.4" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="233.3" y1="444.4" x2="321.3" y2="452.4"/>
+<circle class="map__hub" cx="233.3" cy="444.4" r="6.5"/>
+<rect class="map__chip" x="283.7" y="438.9" width="75.2" height="27" rx="13.5"/>
+<text class="map__hub-label" x="321.3" y="457.5" text-anchor="middle" font-size="16">Queens</text>
+<circle class="map__hub-glow" cx="208.6" cy="389.8" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="208.6" y1="389.8" x2="274.6" y2="369.8"/>
+<circle class="map__hub" cx="208.6" cy="389.8" r="6.5"/>
+<rect class="map__chip" x="241.1" y="356.3" width="67.0" height="27" rx="13.5"/>
+<text class="map__hub-label" x="274.6" y="374.9" text-anchor="middle" font-size="16">Bronx</text>
+<circle class="map__hub-glow" cx="107.5" cy="514.1" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="107.5" y1="514.1" x2="73.5" y2="564.1"/>
+<circle class="map__hub" cx="107.5" cy="514.1" r="6.5"/>
+<rect class="map__chip" x="7.2" y="550.6" width="132.6" height="27" rx="13.5"/>
+<text class="map__hub-label" x="73.5" y="569.2" text-anchor="middle" font-size="16">Staten Island</text>
+<circle class="map__hub-glow" cx="368.1" cy="413.8" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="368.1" y1="413.8" x2="368.1" y2="375.8"/>
+<circle class="map__hub" cx="368.1" cy="413.8" r="6.5"/>
+<rect class="map__chip" x="310.0" y="362.3" width="116.2" height="27" rx="13.5"/>
+<text class="map__hub-label" x="368.1" y="380.9" text-anchor="middle" font-size="16">Long Island</text>
+<circle class="map__hub-glow" cx="244.7" cy="301.1" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="244.7" y1="301.1" x2="330.7" y2="307.1"/>
+<circle class="map__hub" cx="244.7" cy="301.1" r="6.5"/>
+<rect class="map__chip" x="268.5" y="293.6" width="124.4" height="27" rx="13.5"/>
+<text class="map__hub-label" x="330.7" y="312.2" text-anchor="middle" font-size="16">White Plains</text>
+<circle class="map__hub-glow" cx="189.7" cy="274.3" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="189.7" y1="274.3" x2="119.7" y2="270.3"/>
+<circle class="map__hub" cx="189.7" cy="274.3" r="6.5"/>
+<rect class="map__chip" x="86.2" y="256.8" width="67.0" height="27" rx="13.5"/>
+<text class="map__hub-label" x="119.7" y="275.4" text-anchor="middle" font-size="16">Nyack</text>
+<circle class="map__hub-glow" cx="273.0" cy="115.4" r="11" filter="url(#hubGlow)"/>
+<line class="map__leader" x1="273.0" y1="115.4" x2="345.0" y2="119.4"/>
+<circle class="map__hub" cx="273.0" cy="115.4" r="6.5"/>
+<rect class="map__chip" x="307.4" y="105.9" width="75.2" height="27" rx="13.5"/>
+<text class="map__hub-label" x="345.0" y="124.5" text-anchor="middle" font-size="16">Carmel</text>
+</g>
+</svg>
+        </figure>
+
+        <div class="cov__rail">
+
+          <form class="zipcheck" id="zipcheck" novalidate>
+            <label for="zip">Check service availability</label>
+            <div class="zipcheck__row">
+              <input type="text" id="zip" name="zip" inputmode="numeric" autocomplete="postal-code"
+                     maxlength="5" placeholder="Enter ZIP code" aria-describedby="zipout">
+              <button class="btn btn--solid" type="submit">Check Coverage</button>
+            </div>
+            <p class="zipcheck__out" id="zipout" role="status" aria-live="polite"></p>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="cov__section-label">Our service area includes</div>
+      <div class="cov__cards">
+        <div class="cov__card">
+          <div class="cov__silhouette-wrap"><svg class="cov__silhouette" viewBox="0 0 100 100" aria-hidden="true"><path d="M22.5 85.9L15.1 89.3L13.6 90.7L11.6 91.0L9.6 92.0L9.1 91.9L8.2 89.6L8.7 88.5L10.2 87.1L10.3 85.0L9.4 82.6L12.3 80.3L14.1 80.3L15.0 79.1L16.0 73.4L17.1 71.9L17.3 70.9L17.2 68.1L16.5 67.9L16.4 67.4L16.5 65.0L18.2 62.9L19.6 62.2L20.5 62.3L21.1 62.9L23.7 63.5L33.7 61.6L35.3 61.7L36.3 63.1L36.6 66.5L38.8 70.6L37.8 72.6L30.0 81.9L28.4 82.7L26.1 85.2L25.0 84.2L22.5 85.9Z M54.3 76.6L48.1 77.2L45.4 76.7L44.8 75.6L46.5 73.1L46.3 72.1L45.1 71.1L41.8 70.4L40.8 68.7L40.4 66.3L41.0 63.9L41.9 62.0L44.0 59.5L43.7 55.6L43.0 54.0L44.0 52.3L44.2 51.0L43.8 50.0L43.1 49.5L44.7 40.1L56.8 15.1L59.1 8.0L73.3 13.5L79.4 15.3L78.6 19.8L78.7 20.6L79.6 22.0L79.7 23.7L79.1 23.9L78.2 22.2L78.5 21.2L77.8 20.4L77.0 21.9L75.8 21.6L75.0 22.1L74.5 24.4L75.1 26.4L76.2 27.7L77.3 28.3L79.7 32.4L80.5 32.4L81.6 31.3L84.9 35.3L91.7 40.9L91.8 42.0L83.8 74.0L83.9 73.2L80.7 73.1L75.9 74.4L56.6 82.2L56.9 79.2L56.4 78.3L54.3 76.6Z M41.0 51.6L40.1 53.7L39.8 53.5L40.6 51.3L41.0 51.6Z M82.1 20.6L82.0 22.5L81.5 22.5L80.9 21.8L80.9 19.6L81.3 19.4L82.1 20.6Z"/></svg></div>
+          <h3>New York City</h3>
+          <p>Manhattan, Brooklyn, Queens, the Bronx and Staten Island, door to door.</p>
+        </div>
+        <div class="cov__card">
+          <div class="cov__silhouette-wrap"><svg class="cov__silhouette" viewBox="0 0 100 100" aria-hidden="true"><path d="M11.0 61.0L10.9 60.7L9.0 59.1L8.0 57.9L8.6 56.7L8.6 56.4L9.8 54.9L9.8 54.6L9.7 54.1L10.4 53.9L12.1 54.6L12.9 54.2L13.0 53.4L13.9 52.2L14.6 52.2L16.7 51.2L17.7 51.6L18.9 51.3L19.1 51.4L19.8 51.1L20.2 49.7L20.4 49.4L21.4 49.9L22.6 50.1L22.9 50.4L22.9 50.9L23.9 50.9L24.1 50.7L24.0 49.7L24.1 49.0L24.5 48.9L25.3 49.9L26.3 50.6L26.6 50.6L26.6 50.5L27.2 50.4L28.8 50.7L31.7 51.8L35.2 50.4L35.3 50.1L35.4 48.9L35.6 48.3L36.9 47.9L38.2 47.9L39.8 48.5L40.0 48.4L41.9 48.3L46.7 48.5L49.4 48.1L51.7 48.3L52.3 47.7L54.3 47.1L55.4 46.9L56.5 47.0L60.0 46.4L60.8 45.8L61.0 45.4L61.5 45.2L62.8 44.1L64.7 43.3L65.4 42.4L66.1 41.3L67.3 41.2L68.2 40.7L70.0 38.5L71.5 38.1L72.9 37.2L73.4 37.1L73.9 37.3L74.9 36.9L75.2 37.0L75.2 37.2L74.5 38.3L74.0 38.8L72.5 39.8L72.5 38.6L72.2 38.3L71.7 38.3L71.3 38.6L71.0 39.3L71.0 40.1L71.7 41.2L72.6 41.6L73.4 41.6L73.5 41.8L73.2 42.4L73.7 43.3L74.2 43.9L75.6 43.7L76.8 44.4L77.3 44.4L77.6 44.2L78.0 43.6L78.5 43.2L78.9 43.3L79.7 44.0L79.7 44.5L79.6 44.9L80.6 46.3L81.2 46.8L81.5 46.8L82.0 46.5L82.3 45.8L83.0 45.8L83.1 46.0L83.4 45.9L83.5 45.7L83.4 45.1L83.6 45.0L84.1 45.1L85.0 44.7L85.7 44.0L87.1 43.5L87.4 43.2L87.5 42.2L89.2 41.6L90.1 41.6L90.5 41.9L91.4 41.9L91.6 41.8L91.9 42.0L92.0 42.2L91.2 43.3L89.9 44.0L88.5 44.3L84.4 46.3L80.7 47.9L68.3 54.1L65.0 55.4L52.6 60.0L51.9 60.2L47.8 61.8L39.3 65.7L31.3 68.1L30.2 68.3L28.3 68.3L27.7 67.5L26.3 67.8L24.5 68.5L22.0 69.4L17.1 70.5L14.9 70.3L13.3 70.6L8.6 70.5L11.0 61.0Z M80.1 39.6L82.0 40.4L82.1 40.8L81.9 42.9L81.4 43.1L81.4 41.9L81.0 41.1L80.4 40.9L79.6 40.9L79.4 40.8L79.4 40.6L79.5 40.4L80.0 40.0L80.1 39.6Z M88.5 30.0L86.6 30.9L85.6 31.6L84.1 31.8L84.4 31.0L84.9 30.4L85.4 30.4L86.1 30.0L86.6 30.0L88.9 29.4L88.5 30.0Z"/></svg></div>
+          <h3>Long Island</h3>
+          <p>Nassau &amp; Suffolk Counties and every community across the Island.</p>
+        </div>
+        <div class="cov__card">
+          <div class="cov__silhouette-wrap"><svg class="cov__silhouette" viewBox="0 0 100 100" aria-hidden="true"><path d="M59.0 91.3L59.0 91.9L58.6 92.0L58.2 91.6L58.6 90.8L59.0 91.3Z M86.8 48.8L62.8 63.3L70.0 74.8L69.7 78.3L69.9 79.0L69.5 80.4L67.7 81.2L66.9 83.5L63.4 85.2L60.0 87.7L57.4 91.8L53.4 90.6L44.2 87.0L46.5 76.7L45.7 76.7L13.2 57.8L38.0 34.3L38.0 19.4L42.6 13.0L82.2 8.0L80.1 38.0L86.8 48.8Z"/></svg></div>
+          <h3>Hudson Valley</h3>
+          <p>Westchester, Rockland &amp; Putnam Counties, direct from the city line.</p>
+        </div>
+      </div>
+
+      <div class="cov__section-label">We serve</div>
+      <div class="cov__served">
+        <ul class="cov__served-grid">
+          <li><svg class="i" aria-hidden="true"><use href="#i-building-hospital"></use></svg>Hospitals</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-microscope"></use></svg>Laboratories</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-stethoscope"></use></svg>Clinics</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-user-square"></use></svg>Physician offices</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-home-heart"></use></svg>Nursing homes</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-scissors"></use></svg>Surgery centers</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-pill"></use></svg>Pharmacies</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-scan"></use></svg>Imaging centers</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-droplets"></use></svg>Dialysis centers</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-activity"></use></svg>Rehabilitation centers</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-droplet"></use></svg>Blood banks</li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-dots"></use></svg>And more</li>
+        </ul>
+      </div>
+
+      <div class="cov__cta">
+        <div>
+          <h3>Need service outside our standard coverage area?</h3>
+          <p>We offer custom medical courier routes throughout New York City, Long Island and the Hudson Valley.</p>
+        </div>
+        <a class="btn btn--solid" href="#quote">Request custom route<svg class="i" aria-hidden="true"><use href="#i-route"></use></svg></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Compliance framework (compact) ==================================== -->
+  <section class="section on-dark comp" id="compliance" aria-labelledby="comp-h">
+    <span class="comp__watermark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg></span>
+    <div class="wrap">
+      <div class="section-head section-head--rule">
+        <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg>Compliance and regulations</p><h2 id="comp-h">The rules this work runs under</h2>
+      </div>
+      <ul class="comp__grid">
+        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-lock"></use></svg></span><h3>HIPAA Privacy &amp; Security</h3><p>Protected health information in transit: a signed BAA, safeguards, and breach notification that runs back to your facility.</p></li>
+        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-biohazard"></use></svg></span><h3>OSHA Bloodborne Pathogens</h3><p>Written exposure control plan, annual training, protective equipment, and a defined spill and exposure procedure.</p></li>
+        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-box"></use></svg></span><h3>DOT Category B (UN 3373)</h3><p>Triple packaging for diagnostic specimens: leakproof primary and secondary, absorbent, and a marked rigid outer container.</p></li>
+        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg></span><h3>CLIA Specimen Integrity</h3><p>Your lab sets acceptance and rejection criteria. A broken temperature range or an exceeded stability window is a rejection.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ =============================================================== -->
+  <section class="section section--band" id="faq" aria-labelledby="faq-h">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-file-check"></use></svg>Common questions</p>
+        <h2 id="faq-h">What labs ask before they switch</h2>
+        <p class="lead muted">If your question is not here, call dispatch and ask.</p>
+      </div>
+      <div class="faq">
+        <details class="faq__item">
+          <summary>How fast can you pick up a STAT run?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>Response windows are quoted per address pair rather than published as one number, because a Midtown to White Plains run is not the same job as a run between two Brooklyn addresses. Call dispatch with both addresses for a window you can hold us to.</p></div>
+        </details>
+        <details class="faq__item" data-verify="pending">
+          <summary>Will you sign our business associate agreement?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>Yes. A courier handling protected health information is generally a business associate under HIPAA, so we sign your BAA and train every courier on PHI in transit annually.</p></div>
+        </details>
+        <details class="faq__item" data-verify="pending">
+          <summary>Can you issue a certificate of insurance to our facility?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>The certificate of insurance is issued directly to your facility, named to your entity, and a renewal copy is sent before it lapses.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Do you run north of the city, into Westchester and beyond?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>Yes. Westchester, Rockland and Putnam Counties are standard coverage, not a special request. Coverage spans New York City, Nassau and Suffolk Counties on Long Island, and those three Hudson Valley counties.</p></div>
+        </details>
+        <details class="faq__item" data-verify="pending">
+          <summary>What temperature ranges can you carry?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>Ambient and refrigerated 2 to 8 degrees Celsius are standard. Frozen and dry-ice transport are available on confirmation. The reading is logged for the run and reported with the manifest.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary>Do you offer scheduled daily routes as well as on-call runs?<span class="faq__mark" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#i-circle-check"></use></svg></span></summary>
+          <div class="faq__a"><p>Yes. Recurring pickups run in a fixed daily window on the days you choose, with the same courier on your route wherever possible.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote =============================================================
+       Header band across the full width, then the form across the full
+       width in three columns. The previous two-column split left roughly
+       580px of empty ground beside a tall form, which is what made the
+       section feel oversized.
+       ================================================================== -->
+  <section class="section on-dark" id="quote" aria-labelledby="quote-h">
+    <div class="wrap">
+      <div class="quote__head">
+        <div>
+          <h2 id="quote-h">Request a quote</h2>
+          <p class="lead muted">
+            If a specimen is sitting out right now, call. The line is answered
+            by a person who can dispatch, not a menu.
+          </p>
+        </div>
+        <div class="quote__call">
+          <a class="quote__tel" href="tel:+19294545653">(929) 454-5653</a>
+          <p class="small muted">Dispatch line, available 24/7.</p>
+        </div>
+      </div>
+
+      <form class="form" id="quote-form" method="post" action="/api/quote.php" novalidate>
+        <div class="honey" aria-hidden="true">
+          <label for="website">Website</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" name="rendered_at" value="">
+
+        <p class="form__req small muted"><span aria-hidden="true">*</span> Required</p>
+
+        <div class="form__row form__row--3">
+          <div class="field">
+            <label for="facility">Facility name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="facility" name="facility" required autocomplete="organization" aria-describedby="facility-err">
+            <span class="field__error" id="facility-err" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="name">Your name and title <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-err">
+            <span class="field__error" id="name-err" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="email">Work email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" inputmode="email" aria-describedby="email-err">
+            <span class="field__error" id="email-err" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form__row form__row--3">
+          <div class="field">
+            <label for="phone">Direct phone <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" aria-describedby="phone-err">
+            <span class="field__error" id="phone-err" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="pickup">Pickup address <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="pickup" name="pickup" required placeholder="Street, town, dock or suite" aria-describedby="pickup-err">
+            <span class="field__error" id="pickup-err" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="dropoff">Delivery address <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="dropoff" name="dropoff" required placeholder="Street, town, receiving department" aria-describedby="dropoff-err">
+            <span class="field__error" id="dropoff-err" role="alert"></span>
+          </div>
+        </div>
+
+        <p class="form__note small muted">
+          Both addresses are required. Distance, river crossing and time of day
+          all change the price, so a pickup ZIP on its own cannot be quoted.
+        </p>
+
+        <div class="form__row form__row--3">
+          <div class="field">
+            <label for="facility_type">Facility type</label>
+            <select id="facility_type" name="facility_type">
+              <option value="">Select one</option>
+              <option>Clinical or reference laboratory</option>
+              <option>Hospital or health system</option>
+              <option>Physician practice or clinic</option>
+              <option>Pharmacy or infusion</option>
+              <option>Dental or specialty practice</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="service">Service needed</label>
+            <select id="service" name="service">
+              <option value="">Select one</option>
+              <option>STAT or emergency run</option>
+              <option>Scheduled lab route</option>
+              <option>Cold-chain or biologics</option>
+              <option>Pharmacy or infusion delivery</option>
+              <option>Records or imaging</option>
+              <option>Equipment or supply transfer</option>
+              <option>More than one, or not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="temperature">Temperature class</label>
+            <select id="temperature" name="temperature">
+              <option value="">Select one</option>
+              <option>Ambient, 15 to 25 C</option>
+              <option>Refrigerated, 2 to 8 C</option>
+              <option>Frozen, -20 C</option>
+              <option>Dry ice</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form__row form__row--split">
+          <div class="field">
+            <label for="frequency">Volume and frequency</label>
+            <input type="text" id="frequency" name="frequency" placeholder="e.g. two pickups daily, one tote each">
+          </div>
+          <div class="field">
+            <label for="details">Handling notes</label>
+            <textarea id="details" name="details" rows="2"
+              placeholder="Time windows, dock access, container type, after-hours contact."></textarea>
+            <span class="field__hint">Please do not include any patient information here.</span>
+          </div>
+        </div>
+
+        <div class="form__status" id="form-status" role="status" aria-live="polite" hidden></div>
+
+        <div class="form__submit">
+          <button class="btn btn--ghost" type="submit" id="quote-submit">Send request</button>
+          <p class="form__legal">
+            This form is not a secure channel for protected health information.
+            For anything urgent, call dispatch.
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__grid">
+      <div>
+        <p class="site-foot__brand">Bridgeway Medical Logistics</p>
+        <p>B2B medical courier and specimen transport for laboratories, clinics, hospital systems and pharmacies across New York City, Long Island and the Hudson Valley.</p>
+      </div>
+      <div>
+        <h2>Dispatch</h2>
+        <ul>
+          <li><a class="nums" href="tel:+19294545653">(929) 454-5653</a></li>
+          <li><a href="mailto:Info@bridgewayml.com">Info@bridgewayml.com</a></li>
+          <li>178 Columbus Ave<br>New York, NY 10023</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Site</h2>
+        <ul class="ul--split">
+          <li><a href="#services">Services</a></li>
+          <li><a href="#coverage">Coverage</a></li>
+          <li><a href="#why">Why us</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#compliance">Compliance</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="#quote">Request a quote</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-foot__legal">
+      <p>&copy; <span id="year">2026</span> Bridgeway Medical Logistics</p>
+      <p>Founder and managing director: Joseph Henry</p>
+      <p>New York City, Long Island and the Hudson Valley</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/vendor/gsap.min.js" defer></script>
+<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/motion.js" defer></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MovingCompany",
+  "name": "Bridgeway Medical Logistics",
+  "description": "B2B medical courier serving laboratories, clinics, hospital systems and pharmacies across New York City, Long Island and the Hudson Valley. STAT specimen transport, scheduled lab routes, cold-chain and biologics, pharmacy delivery, records and equipment transfers.",
+  "telephone": "+1-929-454-5653",
+  "email": "Info@bridgewayml.com",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "178 Columbus Ave",
+    "addressLocality": "New York",
+    "addressRegion": "NY",
+    "postalCode": "10023",
+    "addressCountry": "US"
+  },
+  "url": "https://bridgewayml.com/",
+  "image": "https://bridgewayml.com/assets/img/og-cover.jpg",
+  "founder": { "@type": "Person", "name": "Joseph Henry" },
+  "areaServed": [
+    { "@type": "City", "name": "New York City" },
+    { "@type": "AdministrativeArea", "name": "Nassau County, New York" },
+    { "@type": "AdministrativeArea", "name": "Suffolk County, New York" },
+    { "@type": "AdministrativeArea", "name": "Westchester County, New York" },
+    { "@type": "AdministrativeArea", "name": "Rockland County, New York" },
+    { "@type": "AdministrativeArea", "name": "Putnam County, New York" }
+  ],
+  "knowsAbout": [
+    "Medical courier", "Specimen transport", "Chain of custody",
+    "Cold chain logistics", "UN 3373 Category B", "HIPAA business associate"
+  ]
+}
+</script>
+
+</body>
+</html>

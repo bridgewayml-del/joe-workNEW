@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found | Bridgeway Medical Logistics</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0B3C5D">
+<link rel="preload" href="/assets/fonts/librefranklin-var-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+
+<!-- Motion boot. Adding the class here (rather than from motion.js) is what
+     prevents a flash of un-animated content: the hide rules apply on the very
+     first paint. The timeout is the safety net -- if motion.js has not
+     confirmed it is alive, the class comes off and the page is simply static
+     and complete. Content is never left depending on a script that failed. -->
+<script>
+  (function () {
+    var r = document.documentElement;
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    r.classList.add('js-motion');
+    setTimeout(function () {
+      if (!window.__bwMotionReady) r.classList.remove('js-motion');
+    }, 2000);
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap site-head__inner">
+    <a class="brand" href="/"><em>Bridgeway</em>&nbsp;Medical Logistics</a>
+    <a class="headtel" href="tel:+19294545653" aria-label="Call dispatch at (929) 454-5653">(929) 454-5653</a>
+    <nav class="nav" aria-label="Main">
+      <a href="/#services">Services</a>
+      <a href="/#coverage">Coverage</a>
+      <a href="/about.html">About</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section">
+    <div class="wrap">
+      <div class="closing">
+        <h1 class="display">That page is not here.</h1>
+        <p class="lead muted">The link may be old. Dispatch is reachable either way.</p>
+        <div class="btn-row mt-2">
+          <a class="btn btn--call" href="tel:+19294545653"
+             aria-label="Call dispatch at (929) 454-5653">(929) 454-5653</a>
+          <a class="btn btn--ghost" href="/">Back to the site</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="site-foot__legal site-foot__legal--bare">
+      <p>&copy; <span id="year">2026</span> Bridgeway Medical Logistics</p>
+      <p>New York City, Long Island and the Hudson Valley</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/vendor/gsap.min.js" defer></script>
+<script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/site.js" defer></script>
+<script src="/assets/js/motion.js" defer></script>
+</body>
+</html>

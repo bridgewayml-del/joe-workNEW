@@ -1,0 +1,84 @@
+# Bridgeway Medical Logistics - Apache config for Hostinger shared hosting.
+# Upload this file along with the rest of the site. It is not optional:
+# it sets the caching that keeps the site fast and the headers that keep it
+# from being framed by someone else.
+
+# ---------------------------------------------------------------- compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript \
+    application/javascript application/json image/svg+xml text/plain
+</IfModule>
+
+# --------------------------------------------------------------------- caching
+# Fonts and images are content-stable, so they get a long TTL. HTML must not be
+# cached hard or edits will not show up for returning visitors.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType font/woff2        "access plus 1 year"
+  ExpiresByType image/webp        "access plus 6 months"
+  ExpiresByType image/jpeg        "access plus 6 months"
+  ExpiresByType image/png         "access plus 6 months"
+  ExpiresByType image/svg+xml     "access plus 6 months"
+  ExpiresByType text/css          "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType text/html         "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(woff2|webp|jpg|jpeg|png|svg)$">
+    Header set Cache-Control "public, max-age=15552000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # ------------------------------------------------------------------ security
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+  # Everything the site needs is served from this origin. No CDN, no external
+  # fonts, no analytics, so the policy can be strict. If you later add an
+  # analytics script or a chat widget, you must extend this or it will be
+  # blocked, and the browser console will tell you exactly which directive.
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+</IfModule>
+
+# ------------------------------------------------------------------ tidy URLs
+# Serves /about for /about.html so links stay clean if you share them.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Force HTTPS. Hostinger issues a free certificate; use it.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # Let /about resolve to /about.html, so a clean URL works if someone types
+  # or shares one. Deliberately NOT paired with a rule that rewrites
+  # /about.html to /about: that would 301 every link in the nav, adding a
+  # round trip to each click and splitting the canonical.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+</IfModule>
+
+# --------------------------------------------------------------------- errors
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------ protect secrets
+# config.php holds the mailbox password. Deny it over HTTP even though PHP
+# files are not served as text, as defence in depth.
+<FilesMatch "^(config\.php|config\.example\.php)$">
+  Require all denied
+</FilesMatch>
+
+<FilesMatch "\.(csv|json|md|log)$">
+  Require all denied
+</FilesMatch>
+
+# Never serve the image sources or version control metadata.
+RedirectMatch 404 ^/_src/
+RedirectMatch 404 ^/\.git

@@ -1,0 +1,1076 @@
+/* ==========================================================================
+   Bridgeway Medical Logistics
+
+   ONE typeface: Libre Franklin, weights 400 / 600 / 900 from a single
+   variable file. Franklin Gothic is the American institutional and
+   public-signage lineage, which is the actual typographic register of
+   official documents. Hierarchy comes from committed weight and size
+   contrast, not from a second or third family.
+
+   NO monospace anywhere. Numbers use this family's tabular figures.
+   Mono-caps labels on every section were the loudest tell in the previous
+   build; a page of small tracked labels reads as costume, not craft.
+
+   PALETTE: navy #0B3C5D + medical blue #0A74DA on white, emerald #1F7A4D as a
+   success accent, seal red reserved for STAT/urgency and errors. Chosen to
+   match the client's supplied photography (navy/blue-cross) and brief. Every
+   pair contrast-verified before applying. (An earlier build used a bond-green
+   identity; the client chose the conventional medical palette to match their
+   imagery.)
+
+   Contents
+     01  Font + metric-matched fallback
+     02  Tokens
+     03  Reset + base
+     04  Layout primitives
+     05  Type
+     06  Buttons + links
+     07  Header
+     08  Hero
+     09  Services grid
+     10  Quote form
+     11  Footer
+     12  About
+     13  Motion
+     14  Print
+     15+ Icons, badges, map, why/how/FAQ, mockup-matched sections
+   ========================================================================== */
+
+/* 01 · Font ============================================================== */
+
+@font-face {
+  font-family: 'Libre Franklin';
+  src: url('../fonts/librefranklin-var-latin.woff2') format('woff2-variations');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-matched fallback. Values measured from the actual font file:
+   x-height 0.530, ascent 96.6%, descent 24.6%, line-gap 0%.
+   size-adjust brings Arial's 0.519 x-height up to 0.530 (102.1%); the
+   ascent and descent overrides are divided by that factor so the line box
+   matches. Result: text does not reflow when the web font arrives. */
+@font-face {
+  font-family: 'LF Fallback';
+  src: local('Arial');
+  size-adjust: 102.1%;
+  ascent-override: 94.6%;
+  descent-override: 24.1%;
+  line-gap-override: 0%;
+}
+
+/* 02 · Tokens ============================================================ */
+
+:root {
+  /* Colour. Contrast-verified, unchanged from the approved direction. */
+  --paper:          #FFFFFF;
+  --band:           #F1F5FA;
+  --ink:            #0F1B2A;  /* 16.0:1 on paper */
+  --ink-muted:      #47566B;  /* 8.0:1 on paper */
+  --bond-600:       #0A63BC;  /* 7.4:1 on paper */
+  --bond-800:       #0B3C5D;  /* primary brand; 12.7:1 with white */
+  --bond-900:       #072A44;  /* 14.7:1 with white */
+  --seal-red:       #B0221D;  /* STAT/urgency + error only, small accents */
+  --blue:           #0A74DA;  /* primary buttons; white on it = 4.64:1 */
+  --blue-dark:      #0A63BC;  /* button hover, links */
+  --emerald:        #1F7A4D;  /* success on light: 'Yes', in-zone */
+  --seal-red-dark:  #8E1B17;
+  --rule:           #D3DBE4;
+  --rule-strong:    #6F7E8C;  /* 4.3:1, clears WCAG 1.4.11 */
+  --on-bond:        #FFFFFF;
+  --on-bond-muted:  #AFC6DA;  /* 6.8:1 on bond-800 */
+  --on-bond-rule:   #22506E;
+
+  --focus: var(--seal-red);
+
+  --ff: 'Libre Franklin', 'LF Fallback', Helvetica, Arial, sans-serif;
+
+  /* Type. Six steps, ~1.33 ratio, generous jump to display so hierarchy
+     reads instantly. Body and small are fixed; headings are fluid.
+     Every clamp keeps max under 2.5x min. */
+  --t-xs:      0.8125rem;                                        /* 13 - table meta only */
+  --t-sm:      0.9375rem;                                        /* 15 - tables, secondary copy */
+  --t-body:    1rem;                                             /* 16 - the a11y floor, held */
+  --t-lead:    clamp(1.0625rem, 1rem + 0.35vw, 1.1875rem);       /* 17 → 19 */
+  --t-h3:      clamp(1.125rem, 1.04rem + 0.4vw, 1.3125rem);      /* 18 → 21 */
+  --t-h2:      clamp(1.5rem, 1.25rem + 1.1vw, 2rem);             /* 24 → 32 */
+  --t-display: clamp(2rem, 1.45rem + 2.7vw, 3.25rem);            /* 32 → 52 */
+
+  /* Vertical rhythm. Body is 17px at line-height 28px, so 1.75rem is the
+     base unit and every vertical space is a multiple of it. */
+  --r:    1.5rem;       /* 24 - body line-height, the rhythm unit */
+  --r-q:  0.375rem;     /* 6  */
+  --r-h:  0.75rem;      /* 12 */
+  --r-2:  2.25rem;      /* 36 */
+  --r-3:  3rem;         /* 48 */
+  --r-4:  4.5rem;       /* 72 */
+
+  --section-y: clamp(2.25rem, 4vw, 3.5rem);
+  --gutter:    clamp(1.25rem, 4vw, 2.5rem);
+  --container: 72rem;   /* 1152 */
+  --half:      36rem;
+
+  --z-nav: 30; --z-overlay: 40;   /* only two layers exist on this site */
+  /* Curves cited in review-animations/STANDARDS.md. Built-in CSS easings are
+     too weak to read as intentional. Hover and colour changes use plain
+     `ease` per the decision order; entering elements use the strong ease-out. */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease: var(--ease-out);
+
+  color-scheme: light;
+}
+
+/* 03 · Reset + base ====================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--ff);
+  font-size: var(--t-body);
+  font-weight: 400;
+  line-height: 1.5;                /* 24px on 16px - the rhythm unit */
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, svg { display: block; max-width: 100%; height: auto; }
+/* The UA default is margin: 1em 40px, which was holding the hero photograph
+   40px short of the viewport edge and killing the bleed. */
+figure { margin: 0; }
+
+.skip {
+  position: absolute; left: var(--gutter); top: var(--r-h);
+  z-index: var(--z-overlay);
+  padding: var(--r-h) var(--r);
+  background: var(--seal-red); color: #fff;
+  font-size: var(--t-sm); font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-250%);
+}
+.skip:focus { transform: translateY(0); }
+
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 1px; }
+
+/* Light type on a dark ground loses perceived weight on three axes, so all
+   three are compensated: looser leading, a touch of tracking, and a step up
+   in weight (available because the family is variable). */
+.on-dark {
+  background: var(--bond-800);
+  color: var(--on-bond);
+  line-height: 1.56;
+  letter-spacing: 0.012em;
+  font-weight: 450;
+  --focus: #FFFFFF;
+}
+.on-dark h2, .on-dark h3, .on-dark p, .on-dark li { color: var(--on-bond); }
+.on-dark .muted { color: var(--on-bond-muted); }
+
+/* 04 · Layout primitives ================================================= */
+
+.wrap {
+  width: 100%; max-width: var(--container);
+  margin-inline: auto; padding-inline: var(--gutter);
+}
+.section { padding-block: var(--section-y); }
+.section--band { background: var(--band); }
+
+/* 05 · Type ============================================================== */
+
+h1, h2, h3 {
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.026em;
+  margin: 0 0 var(--r-h);
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-h2); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); letter-spacing: -0.022em; line-height: 1.12; }
+
+.display {
+  font-size: var(--t-display);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.033em;   /* above the -0.04em floor */
+  margin: 0 0 var(--r);
+  text-wrap: balance;
+}
+
+p { margin: 0 0 var(--r); max-width: 72ch; text-wrap: pretty; }
+p:last-child { margin-bottom: 0; }
+
+.lead { font-size: var(--t-lead); line-height: 1.5; max-width: 62ch; }
+.muted { color: var(--ink-muted); }
+.small { font-size: var(--t-sm); }
+
+/* Numbers align in columns without a monospace family. */
+.nums { font-variant-numeric: tabular-nums; }
+
+.section-head { margin-bottom: var(--r); }
+.section-head h2 { max-width: 22ch; }
+.section-head .lead { margin-bottom: 0; }
+
+/* 06 · Buttons + links =================================================== */
+
+a { color: var(--bond-600); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { color: var(--bond-800); }
+.on-dark a { color: #fff; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 3.25rem;                 /* 52px */
+  padding: var(--r-h) var(--r-2);
+  border: 2px solid transparent; border-radius: 2px;
+  font-family: inherit; font-size: var(--t-body); font-weight: 700;
+  letter-spacing: -0.005em; text-decoration: none; cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 170ms ease, border-color 170ms ease, color 170ms ease,
+              transform 160ms var(--ease-out);
+}
+/* scale, not a 1px nudge: the standard press feedback, and it scales the
+   label with it so the whole control reads as pressed. */
+.btn:active { transform: scale(0.97); }
+
+.btn--call {
+  background: var(--blue); border-color: var(--blue); color: #fff;
+  font-weight: 700; font-variant-numeric: tabular-nums;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn--call:hover { background: var(--blue-dark); border-color: var(--blue-dark); color: #fff; }
+}
+
+.btn--solid { background: var(--bond-800); border-color: var(--bond-800); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn--solid:hover { background: var(--bond-900); border-color: var(--bond-900); color: #fff; }
+}
+.btn--ghost { background: transparent; border-color: var(--ink); color: var(--ink); }
+@media (hover: hover) and (pointer: fine) {
+  .btn--ghost:hover { background: var(--ink); color: #fff; }
+}
+.on-dark .btn--ghost { border-color: #fff; color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .on-dark .btn--ghost:hover { background: #fff; color: var(--bond-800); }
+}
+
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--r-h) var(--r); align-items: center; }
+/* Stacked buttons of different widths read as untidy on a phone. Full width
+   also gives a bigger target for the call, which is the point of the page. */
+@media (max-width: 30rem) {
+  .btn-row .btn { flex: 1 1 100%; }
+}
+
+/* 07 · Header ============================================================ */
+
+/* Sticky from 48rem up, where the header is a single 72px row. Below that it
+   is two rows and pinning it would eat too much of a phone viewport. Keeping
+   the dispatch number permanently reachable is the point: it is the
+   conversion, and a buyer should never have to scroll back up for it. */
+.site-head { border-bottom: 1px solid var(--rule); background: var(--paper); }
+@media (min-width: 48rem) {
+  .site-head { position: sticky; top: 0; z-index: var(--z-nav); }
+}
+.site-head__inner {
+  display: flex; flex-wrap: wrap; align-items: center;
+  column-gap: var(--r); padding-block: var(--r-q);
+}
+.site-head__inner > .brand   { order: 1; margin-inline-end: auto; }
+.site-head__inner > .headtel { order: 2; }
+.site-head__inner > .nav     { order: 3; width: 100%; }
+
+.brand {
+  display: inline-flex; align-items: center; min-height: 2.75rem;
+  font-size: 1.125rem; font-weight: 900; letter-spacing: -0.038em;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
+}
+.brand em { font-style: normal; color: var(--bond-800); }
+
+.nav {
+  display: flex; align-items: center; gap: 0 var(--r);
+  flex-wrap: wrap;              /* five links do not fit one row at 375px */
+  border-top: 1px solid var(--rule); margin-top: var(--r-q);
+}
+.nav a {
+  display: inline-flex; align-items: center; min-height: 2.75rem;
+  font-size: var(--t-sm); font-weight: 600; color: var(--ink); text-decoration: none;
+}
+.nav a:hover { color: var(--bond-600); text-decoration: underline; }
+.nav a[aria-current='page'] {
+  text-decoration: underline; text-decoration-color: var(--seal-red);
+  text-decoration-thickness: 2px; text-underline-offset: 0.3em;
+}
+
+.headtel {
+  display: inline-flex; align-items: center; min-height: 2.75rem;
+  font-size: 1.0625rem; font-weight: 700; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink); text-decoration: none; white-space: nowrap;
+}
+.headtel:hover { color: var(--seal-red); }
+
+@media (min-width: 48rem) {
+  .site-head__inner { flex-wrap: nowrap; padding-block: 0; min-height: 4.5rem; }
+  .site-head__inner > .nav   { order: 2; width: auto; border-top: 0; margin-top: 0; margin-inline-end: var(--r-2); }
+  .site-head__inner > .headtel { order: 3; }
+}
+
+/* 08 · Hero (full-bleed banner) ========================================= */
+/* A real <img> fills the section; a navy gradient scrim sits above it; the
+   copy sits above the scrim. Text is white on the dark left side. The scrim
+   is opaque enough on the left that legibility does not depend on the photo,
+   which matters because the left of this photo is a white van. */
+
+.hero { position: relative; isolation: isolate; background: var(--bond-900); }
+.hero__bg { position: absolute; inset: 0; z-index: 0; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
+/* Scrim: near-opaque navy on the left, clearing toward the right where the
+   subject sits. Second layer darkens the very bottom for the scope strip. */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(90deg,
+      rgba(7,42,68,0.94) 0%, rgba(7,42,68,0.88) 34%,
+      rgba(9,50,80,0.55) 66%, rgba(11,60,93,0.20) 100%),
+    linear-gradient(0deg, rgba(7,42,68,0.55) 0%, rgba(7,42,68,0) 40%);
+}
+.hero__inner { position: relative; z-index: 2; padding-block: clamp(3rem, 8vw, 6rem); }
+.hero__copy { max-width: 40rem; color: #fff; }
+.hero__copy .display { color: #fff; max-width: 18ch; }
+.hero__lead { color: #EAF1F8; margin-bottom: var(--r-2); max-width: 48ch; }
+
+/* Ghost button variant that reads on a photo */
+.btn--onphoto { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.65); color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .btn--onphoto:hover { background: #fff; color: var(--bond-800); border-color: #fff; }
+}
+
+@media (min-width: 40rem) {
+  .hero__inner { min-height: clamp(30rem, 60vh, 40rem); display: flex; align-items: center; }
+}
+/* On small screens the scrim goes mostly vertical so text stays readable over
+   whatever part of the photo shows. */
+@media (max-width: 39.99rem) {
+  .hero::before {
+    background:
+      linear-gradient(180deg, rgba(7,42,68,0.80) 0%, rgba(7,42,68,0.72) 45%, rgba(7,42,68,0.86) 100%);
+  }
+  .hero__bg img { object-position: 62% 50%; }
+}
+
+/* 10 · Services grid ===================================================== */
+/* A two-by-two grid of blocks, two dimensions rather than a one-dimensional
+   list, and separated by space rather than hairlines. */
+
+.svc__grid { display: grid; gap: 0.875rem; }
+@media (min-width: 48rem) { .svc__grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; } }
+@media (min-width: 68rem) { .svc__grid { grid-template-columns: repeat(3, 1fr); } }
+/* Cell count must match item count: four items in a three-column grid leaves
+   an orphan in the second row, which reads as a mistake. */
+@media (min-width: 62rem) { .svc__grid--4 { grid-template-columns: repeat(4, 1fr); } }
+
+
+/* 11 · (Section removed; see "20 · Coverage" for the current Coverage rules) */
+
+/* 12 · Quote form ======================================================== */
+
+/* Header band, then a full-width form. The old two-column split parked the
+   heading and phone in a column that ran out of content 580px before the form
+   did, and that empty ground is what made the section feel oversized. */
+.quote__head { display: grid; gap: var(--r); align-items: end; margin-bottom: var(--r-2); }
+@media (min-width: 52rem) {
+  .quote__head { grid-template-columns: 1fr auto; gap: var(--r-2); }
+  .quote__call { text-align: right; }
+}
+.quote__head h2 { margin-bottom: var(--r-q); }
+.quote__head .lead { margin-bottom: 0; }
+.quote__call p { margin: 0; }
+.form__note { margin: 0; max-width: 74ch; }
+/* Frequency is short, notes want room: 1 to 2 rather than an even split. */
+@media (min-width: 52rem) { .form__row--split { grid-template-columns: 1fr 2fr; gap: 1.25rem; } }
+
+/* Padding to clear the 44px target: at the clamp minimum the line box is only
+   31px, and this is a primary tap target. */
+.quote__tel {
+  display: inline-block; margin-block: 0 var(--r-q);
+  padding-block: 0.35rem; min-height: 2.75rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.375rem);
+  font-weight: 900; letter-spacing: -0.032em; line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  color: #fff; text-decoration: none;
+  margin-block: var(--r-h) var(--r-q);
+}
+.quote__tel:hover { text-decoration: underline; text-underline-offset: 0.12em; }
+
+/* 20px between field rows. Nine fields on the 24px rhythm made the form
+   panel taller than everything else in the section combined. */
+.form { display: grid; gap: 1.25rem; }
+.form__row { display: grid; gap: 1.25rem; align-items: start; }
+@media (min-width: 40rem) { .form__row--2 { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
+/* Three short selects share one row on wide viewports, saving a whole row of
+   height in a nine-field form. */
+@media (min-width: 62rem) { .form__row--3 { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+@media (min-width: 40rem) and (max-width: 61.99rem) { .form__row--3 { grid-template-columns: 1fr 1fr; gap: 1.25rem; } }
+
+.field { display: grid; gap: 0.3rem; align-content: start; }
+/* Sentence case, not tracked small caps. */
+.field label { font-size: var(--t-sm); font-weight: 600; color: #fff; letter-spacing: 0; }
+.field__hint { font-size: var(--t-sm); color: var(--on-bond-muted); }
+
+.field input, .field select, .field textarea {
+  width: 100%; min-height: 2.875rem;   /* 46px, still over the 44px minimum */
+  padding: 0.6rem var(--r-h);
+  background: #fff; border: 1px solid var(--rule-strong); border-radius: 2px;
+  color: var(--ink); font-family: inherit; font-size: 1rem; font-weight: 400;
+  line-height: 1.5; letter-spacing: 0;
+}
+.field textarea { min-height: 5.5rem; resize: vertical; }
+.field select { appearance: none; }
+.field input::placeholder, .field textarea::placeholder { color: #5C6B7A; }  /* 5.5:1 */
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+  outline: 2px solid #fff; outline-offset: 2px;
+}
+.field [aria-invalid='true'] { border-color: var(--seal-red); border-width: 2px; }
+.field__error { font-size: var(--t-sm); font-weight: 600; color: #FFC9C6; min-height: 1.4em; }
+
+.honey { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.form__submit { display: flex; flex-wrap: wrap; gap: var(--r-h) var(--r); align-items: center; }
+.form__legal { font-size: var(--t-sm); color: var(--on-bond-muted); margin: 0; max-width: 40ch; }
+
+.form__status {
+  padding: var(--r-h) var(--r);
+  border: 2px solid var(--on-bond-rule); border-radius: 2px;
+  font-size: var(--t-body);
+}
+/* Appearing with no transition reads as broken. This is state indication on
+   an occasional event, so it earns a standard-length entry. allow-discrete
+   lets it animate out of display:none; browsers without it just snap. */
+.form__status {
+  opacity: 1; transform: none;
+  transition: opacity 220ms ease, transform 220ms var(--ease-out),
+              display 220ms allow-discrete;
+}
+.form__status[hidden] { display: none; opacity: 0; transform: translateY(-0.25rem); }
+@starting-style {
+  .form__status:not([hidden]) { opacity: 0; transform: translateY(-0.25rem); }
+}
+.form__status--ok  { border-color: #AFC6DA; background: rgba(255,255,255,0.08); }
+.form__status--err { border-color: #FFC9C6; background: rgba(176,34,29,0.24); color: #FFE3E1; }
+
+.btn[aria-busy='true'] { opacity: 0.7; cursor: progress; }
+
+/* 13 · Footer ============================================================ */
+
+.site-foot { background: var(--bond-900); color: var(--on-bond-muted); padding-block: var(--r-2) var(--r); line-height: 1.5; }
+.site-foot__grid { display: grid; gap: var(--r); }
+@media (min-width: 48rem) { .site-foot__grid { grid-template-columns: 1.5fr 1fr 1fr; gap: var(--r-2); } }
+.site-foot h2 { font-size: var(--t-sm); font-weight: 700; letter-spacing: 0; color: var(--on-bond-muted); margin-bottom: var(--r-q); }
+/* Two columns for the longer link list, so the footer is not as tall as its
+   longest stack. */
+.site-foot ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+@media (min-width: 30rem) { .site-foot ul.ul--split { grid-template-columns: repeat(2, 1fr); column-gap: var(--r); } }
+.site-foot a { color: #fff; text-decoration: none; }
+.site-foot a:hover { text-decoration: underline; }
+.site-foot ul a { display: inline-flex; align-items: center; min-height: 2.25rem; }
+.site-foot__brand { font-size: 1.25rem; font-weight: 900; letter-spacing: -0.038em; color: #fff; margin-bottom: var(--r-q); }
+.site-foot__legal {
+  margin-top: var(--r); padding-top: var(--r-h); border-top: 1px solid var(--on-bond-rule);
+  font-size: var(--t-sm); display: flex; flex-wrap: wrap; gap: var(--r-q) var(--r-2);
+}
+.site-foot__legal p { margin: 0; max-width: none; }
+
+/* 14 · About ============================================================= */
+
+.page-head { border-bottom: 1px solid var(--rule); padding-block: var(--r-3) var(--r-2); }
+.page-head .lead { margin-top: var(--r); color: var(--ink-muted); }
+/* Slogan. A left rule rather than quote marks: quote marks imply someone said
+   this about us, a rule just marks it as a set-off line of brand voice. */
+.tagline {
+  margin-top: var(--r-2); padding-left: var(--r); max-width: 42ch;
+  border-left: 3px solid var(--blue);
+  font-size: var(--t-h3); font-weight: 700; font-style: italic;
+  color: var(--ink); line-height: 1.4;
+}
+
+.founder { display: grid; gap: var(--r-2); align-items: start; }
+@media (min-width: 58rem) { .founder { grid-template-columns: 1.25fr 0.75fr; gap: var(--r-3); } }
+.founder__prose > * + * { margin-top: var(--r); }
+.founder__figure img { width: 100%; border-radius: 2px; }
+.founder__figure figcaption { margin-top: var(--r-h); font-size: var(--t-sm); color: var(--ink-muted); }
+/* A headshot at full column width reads oversized next to body text --
+   contained and centred is the standard treatment. */
+.founder__figure--portrait { max-width: 20rem; margin-inline: auto; }
+@media (min-width: 58rem) { .founder__figure--portrait { max-width: 22rem; margin-inline: 0; } }
+
+/* Driver standards: a two-column grid of blocks with a large index numeral
+   set in the same family. No rules, no numbered eyebrow scaffolding. */
+.std__grid { display: grid; gap: var(--r-2); }
+@media (min-width: 48rem) { .std__grid { grid-template-columns: repeat(2, 1fr); gap: var(--r-2); } }
+@media (min-width: 68rem) { .std__grid { grid-template-columns: repeat(3, 1fr); } }
+.std h3 { margin-bottom: var(--r-h); max-width: 24ch; }
+.std p { font-size: var(--t-sm); line-height: 1.6; margin: 0; max-width: 44ch; }
+
+.closing { max-width: 40rem; }
+
+/* 15 · Motion ============================================================ */
+/* One moment on hero load, then the page is still. Nothing animates on
+   scroll anywhere on this site. Content is visible by default and motion is
+   added only when it is welcome, so a headless renderer or a background tab
+   never ships a blank hero. */
+
+@keyframes bw-rise { from { opacity: 0; transform: translateY(0.625rem); } to { opacity: 1; transform: none; } }
+@keyframes bw-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Stagger sits in the 30-80ms band. The previous 110ms and 90ms gaps read
+     as slow. Duration is 480ms, not 620: this brand is precise, and the
+     cohesion rule is to match motion to the mood. */
+  .hero .display,
+  .hero__lead,
+  .hero .btn-row { animation: bw-rise 480ms var(--ease-out) both; }
+  .hero .display  { animation-delay: 40ms; }
+  .hero__lead     { animation-delay: 110ms; }
+  .hero .btn-row  { animation-delay: 180ms; }
+  .hero__media    { animation: bw-fade 480ms var(--ease-out) 40ms both; }
+}
+
+/* Reduced motion means fewer and gentler animations, not zero. The opacity
+   fade aids comprehension and stays; only the positional movement goes. */
+@media (prefers-reduced-motion: reduce) {
+  .hero .display,
+  .hero__lead,
+  .hero .btn-row,
+  .hero__media { animation: bw-fade 260ms ease both; }
+}
+
+/* 16 · Print ============================================================= */
+/* Practice managers print vendor sheets into procurement files. */
+
+@media print {
+  .site-head, .skip, .hero__media, .form, .founder__figure { display: none; }
+  body { color: #000; background: #fff; font-size: 11pt; line-height: 1.45; }
+  .on-dark, .site-foot { background: #fff !important; color: #000 !important; font-weight: 400; letter-spacing: 0; }
+  .on-dark *, .site-foot * { color: #000 !important; }
+  a { text-decoration: underline; }
+  .section, .creds { padding-block: 0.75rem; }
+  h2, h3, .display { page-break-after: avoid; }
+}
+
+/* Required-field marking. The asterisk is decorative (aria-hidden); the
+   input's own `required` attribute is what assistive tech announces. The
+   legend gives the asterisk meaning for everyone else. */
+.req { color: #FFC9C6; font-weight: 700; }
+.form__req { margin: 0; }
+
+/* Small utilities, so markup carries no inline style attributes. */
+.mt-2 { margin-top: var(--r-2); }
+.site-foot__legal--bare { margin-top: 0; border-top: 0; padding-top: 0; }
+.on-dark .spec__meta { color: var(--on-bond-muted); }
+/* bond-600 is 7.4:1 on white but only 1.71:1 on the dark ground. The
+   citations live on dark, so they need the light green. */
+.on-dark .reg__cite { color: #7FB4E8; }   /* 6.6:1 */
+.reg__item h3 { margin-bottom: var(--r-q); }
+.on-dark .packet li { color: var(--on-bond); }
+.on-dark .packet li::before { background: var(--on-bond-muted); }
+
+/* ==========================================================================
+   18 · Coverage directory
+
+   Classic directory setting: a region label over a hanging-indent list of
+   zones, each with its areas as a run of prose. This is how a gazetteer or
+   the back matter of a reference book sets a place index, and it suits the
+   content far better than a nine-row bordered table did.
+   ========================================================================== */
+
+.dir__grid { display: grid; gap: var(--r-2); }
+@media (min-width: 56rem) { .dir__grid { grid-template-columns: 1.15fr 1fr; gap: var(--r-3); } }
+
+.dir__region {
+  font-size: var(--t-sm);
+  font-weight: 700;
+  letter-spacing: 0;
+  color: var(--ink-muted);
+  margin: 0 0 var(--r-h);
+  padding-bottom: var(--r-q);
+  border-bottom: 1px solid var(--rule);
+}
+
+.dir { margin: 0; display: grid; gap: var(--r-h); }
+.dir__row { display: grid; gap: 0.1rem; }
+/* Hanging indent once there is room for it: the zone name sits in its own
+   measure and the areas align to a common left edge, which is what makes a
+   printed index scannable. */
+@media (min-width: 34rem) {
+  .dir__row { grid-template-columns: 8.5rem 1fr; gap: 0 var(--r); align-items: baseline; }
+}
+.dir dt {
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+}
+.dir dd {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: var(--t-sm);
+  line-height: 1.5;
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+.dir__sla {
+  display: inline-block;
+  margin-inline-start: 0.4ch;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dir__note {
+  margin-top: var(--r);
+  padding-top: var(--r-h);
+  border-top: 1px solid var(--rule);
+  font-size: var(--t-sm);
+  color: var(--ink-muted);
+  max-width: 48ch;
+}
+
+/* ==========================================================================
+   19 · Icons, badges, eyebrows
+
+   Icons are Tabler outline (MIT), inlined as one <symbol> sprite at the top
+   of <body>. No extra request, no hand-rolled paths, no icon font.
+
+   Three badge tints, each semantically earned rather than decorative:
+   brand green by default, seal red for urgency, cold blue for temperature.
+   ========================================================================== */
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.i {
+  width: 1.25em; height: 1.25em;
+  flex: none;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Circular tinted badge behind an icon */
+.badge {
+  display: inline-grid; place-items: center;
+  width: 2.75rem; height: 2.75rem;
+  border-radius: 50%;
+  background: #E1EEFB;
+  color: var(--bond-800);
+  flex: none;
+}
+.badge .i { width: 1.375rem; height: 1.375rem; }
+.badge--stat { background: #FBE7E6; color: var(--seal-red); }
+.badge--cold { background: #E2EDF4; color: #1C5A7A; }   /* 6.7:1 on its tint */
+.badge--sm   { width: 2rem; height: 2rem; }
+.badge--sm .i { width: 1rem; height: 1rem; }
+
+/* On the dark ground the badge is a ring rather than a filled disc */
+.on-dark .badge {
+  background: rgba(255,255,255,0.07);
+  color: #CFE0F2;
+  box-shadow: inset 0 0 0 1px var(--on-bond-rule);
+}
+
+/* Section eyebrow: icon plus a short label. One per section, and the label
+   always names the section rather than numbering it. */
+.eyebrow {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: var(--t-xs); font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--bond-600);
+  margin: 0 0 var(--r-h);
+}
+.eyebrow .i { width: 1rem; height: 1rem; }
+.on-dark .eyebrow { color: #7FB4E8; }
+
+/* Service card. Compact: the badge, padding and leading are all a step down
+   from the page defaults so six cards do not dominate the page. */
+.svc {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0.875rem 1rem;
+  display: flex; flex-direction: column;
+}
+.section--band .svc { background: var(--paper); }
+.svc__head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+.svc__head h3 { margin: 0; font-size: 0.9375rem; line-height: 1.25; letter-spacing: -0.015em; max-width: 20ch; }
+.svc__head .badge { width: 1.75rem; height: 1.75rem; }
+.svc__head .badge .i { width: 0.9375rem; height: 0.9375rem; }
+/* Only the description flexes. Previously `.svc p` matched the turnaround
+   line too, so both grew and left dead space under it in equal-height rows. */
+.svc > p { font-size: 0.875rem; line-height: 1.4; margin: 0; max-width: 44ch; }
+.svc > p:not(.svc__turn) { flex: 1; }
+.svc__turn {
+  flex: none;
+  display: flex; align-items: center; gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.8125rem; font-weight: 700; color: var(--bond-600);
+}
+.svc__turn .i { width: 0.875rem; height: 0.875rem; }
+.svc__turn--stat { color: var(--seal-red); }
+.on-dark .svc { background: rgba(255,255,255,0.04); border-color: var(--on-bond-rule); }
+.on-dark .svc__turn { border-top-color: var(--on-bond-rule); color: #7FB4E8; }
+
+/* ==========================================================================
+   20 · Coverage map
+   ========================================================================== */
+
+/* Redesigned at the client's explicit direction toward an "enterprise
+   logistics platform" feel -- gradient fill, glow, route lines -- which is a
+   deliberate exception to this file's usual flat, anti-SaaS-gradient
+   language (see DESIGN.md "Aesthetic lane"). Confined to this one section. */
+
+.cov__head { max-width: 46rem; margin-bottom: var(--r-2); }
+.cov__head .lead { margin-top: var(--r-q); }
+
+/* ZIP check -- unchanged behaviour, restyled as its own card at the top of
+   the rail rather than paired with the section heading. */
+.zipcheck {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 8px;
+  padding: var(--r); box-shadow: 0 1px 2px rgba(11,60,93,0.05);
+}
+.zipcheck label { display: block; font-size: var(--t-sm); font-weight: 700; margin-bottom: var(--r-h); }
+.zipcheck__row { display: flex; gap: var(--r-h); }
+.zipcheck input {
+  flex: 1; min-width: 0; min-height: 2.875rem;
+  padding: 0.6rem var(--r-h);
+  background: #fff; border: 1px solid var(--rule-strong); border-radius: 2px;
+  font-family: inherit; font-size: 1rem; font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.zipcheck .btn { min-height: 2.875rem; padding-inline: var(--r); white-space: nowrap; }
+.zipcheck__out {
+  margin: var(--r-h) 0 0; font-size: var(--t-sm); font-weight: 600;
+  max-width: 34ch; min-height: 1.2em;
+}
+.zipcheck__out--ok   { color: var(--emerald); }
+.zipcheck__out--warn { color: var(--seal-red); }
+
+/* Layout: map left, rail right. Single column below 62rem. */
+/* `minmax(0, 1fr)` rather than the implicit single-column default: a bare
+   grid track sizes to its content's max-content width, and the map SVG (no
+   width/height attribute, only a viewBox) has enough intrinsic width to pull
+   the whole section wider than the viewport on mobile. minmax(0, ...) caps
+   the track at the container's own width regardless of content. */
+.cov__layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--r-2); align-items: start; }
+/* 1.8fr : 1fr rather than the earlier 1.3fr -- the rail only holds the ZIP
+   checker now (cards and the facility directory moved below, full width),
+   so it doesn't need much column width, and the map is the thing worth
+   spending the space on. */
+@media (min-width: 62rem) { .cov__layout { grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr); gap: var(--r-2); } }
+.cov__rail { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--r); align-content: start; }
+
+.cov__map { margin: 0; min-width: 0; }
+.map__svg {
+  width: 100%; height: auto; display: block;
+  border-radius: 16px; box-shadow: 0 20px 48px rgba(10,60,93,0.22);
+}
+.cov__map figcaption { margin-top: var(--r-h); font-size: var(--t-xs); color: var(--ink-muted); max-width: 52ch; }
+
+.map__water { fill: url(#mapWater); }
+.map__ctx   { fill: #E7ECF2; stroke: #fff; stroke-width: 1; }
+.map__zone  { fill: url(#mapLand); stroke: #fff; stroke-width: 1.5; }
+.map__route { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1 7; opacity: 0.9; }
+.map__hub-glow { fill: #5FB4FF; opacity: 0.5; }
+.map__hub   { fill: #fff; stroke: #0A5FB0; stroke-width: 3; }
+.map__leader{ stroke: #0A5FB0; stroke-width: 1.25; opacity: 0.55; }
+.map__chip  { fill: #fff; stroke: #DCE9F7; stroke-width: 1; filter: drop-shadow(0 2px 4px rgba(10,60,93,0.18)); }
+.map__hub-label { font-family: var(--ff); font-size: 12.5px; font-weight: 800; fill: var(--bond-800); }
+
+/* Section micro-label. A thin rule fills the remaining row width so the
+   label reads as a divider, not a heading competing with the H2 above it. */
+.cov__section-label {
+  display: flex; align-items: center; gap: var(--r);
+  margin: var(--r-3) 0 var(--r); font-size: var(--t-sm); font-weight: 800;
+  letter-spacing: 0.02em; color: var(--blue-dark);
+}
+.cov__section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+/* Three region cards: solid-colour circle badge with a white silhouette of
+   the actual county geometry, not a generic pin -- the shape itself is the
+   proof the coverage claim is specific. */
+.cov__cards { display: grid; gap: var(--r); }
+@media (min-width: 34rem) { .cov__cards { grid-template-columns: repeat(3, 1fr); } }
+.cov__card {
+  background: var(--band); border: 1px solid var(--rule); border-radius: 12px;
+  padding: var(--r-2) var(--r);
+}
+.cov__silhouette-wrap {
+  width: 4.5rem; height: 4.5rem; border-radius: 50%;
+  background: var(--blue); display: grid; place-items: center;
+  margin: 0 auto var(--r);
+}
+.cov__silhouette { width: 62%; height: 62%; fill: #fff; }
+.cov__card h3 { margin: 0 0 var(--r-q); font-size: var(--t-h3); text-align: center; color: var(--blue-dark); }
+.cov__card > p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); text-align: center; }
+
+/* Facility list: one bordered card, three columns of icon + label rows with
+   hairline separators -- a directory, not a badge wall. */
+.cov__served {
+  background: var(--paper); border: 1px solid var(--rule); border-radius: 12px;
+  padding: var(--r-h) var(--r);
+}
+.cov__served-grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1fr; gap: 0;
+}
+@media (min-width: 34rem) { .cov__served-grid { grid-template-columns: repeat(3, 1fr); column-gap: var(--r); } }
+.cov__served-grid li {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: var(--r-h) 0; font-size: var(--t-sm); font-weight: 700; color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+}
+/* Hairline only between rows, not under the last row of each column. */
+@media (min-width: 34rem) {
+  .cov__served-grid li:nth-last-child(-n+3) { border-bottom: 0; }
+}
+@media (max-width: 33.9rem) {
+  .cov__served-grid li:last-child { border-bottom: 0; }
+}
+.cov__served-grid .i { width: 1.25rem; height: 1.25rem; color: var(--blue-dark); flex: none; }
+
+/* Bottom banner */
+.cov__cta {
+  margin-top: var(--r-2);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--r);
+  background: linear-gradient(120deg, var(--bond-800), var(--bond-900));
+  color: #fff; border-radius: 12px; padding: var(--r-2);
+}
+.cov__cta h3 { color: #fff; margin: 0 0 0.25rem; font-size: var(--t-h3); }
+.cov__cta p { margin: 0; color: var(--on-bond-muted); font-size: var(--t-sm); max-width: 46ch; }
+.cov__cta .btn { flex: none; }
+.cov__cta .btn .i { width: 1.125rem; height: 1.125rem; margin-left: 0.4rem; }
+
+/* ==========================================================================
+   22 · Why choose us / How it works / FAQ
+   ========================================================================== */
+
+/* Why: photo left, four reasons right */
+.why__grid { display: grid; gap: var(--r-2); align-items: center; }
+@media (min-width: 56rem) { .why__grid { grid-template-columns: 1fr 1.1fr; gap: var(--r-3); } }
+.why__fig { margin: 0; }
+.why__fig img { width: 100%; border-radius: 4px; border: 1px solid var(--rule); }
+.why__body .eyebrow { margin-top: 0; }
+.why__list { list-style: none; margin: var(--r) 0 0; padding: 0; display: grid; gap: var(--r); }
+.why__list li { display: flex; gap: var(--r-h); align-items: flex-start; }
+.why__list .i { color: var(--blue-dark); width: 1.5rem; height: 1.5rem; flex: none; margin-top: 0.15em; }
+.why__list h3 { margin: 0 0 0.15rem; font-size: var(--t-h3); }
+.why__list p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: 44ch; }
+
+/* How: numbered timeline */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--r-2); counter-reset: step; }
+@media (min-width: 52rem) { .steps { grid-template-columns: repeat(4, 1fr); gap: var(--r); } }
+.step { position: relative; padding-top: var(--r-h); }
+.step__num {
+  display: inline-grid; place-items: center;
+  width: 1.75rem; height: 1.75rem; border-radius: 50%;
+  background: var(--blue); color: #fff; font-weight: 900; font-size: var(--t-sm);
+  font-variant-numeric: tabular-nums; margin-bottom: var(--r-h);
+}
+.step__ic { display: none; }
+.step h3 { font-size: var(--t-h3); margin: 0 0 0.25rem; }
+.step p { font-size: var(--t-sm); color: var(--ink-muted); margin: 0; max-width: 34ch; }
+/* connector line between steps on wide screens */
+@media (min-width: 52rem) {
+  .step::before {
+    content: ''; position: absolute; top: calc(var(--r-h) + 0.875rem); left: 2.25rem; right: -0.5rem;
+    height: 2px; background: var(--rule);
+  }
+  .step:last-child::before { display: none; }
+}
+
+/* FAQ: native details/summary accordion */
+.faq { border-top: 1px solid var(--rule); max-width: 60rem; }
+.faq__item { border-bottom: 1px solid var(--rule); }
+.faq__item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--r);
+  padding: var(--r) 0; cursor: pointer; list-style: none;
+  font-family: inherit; font-weight: 700; font-size: var(--t-h3); color: var(--ink);
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary:hover { color: var(--blue-dark); }
+.faq__item summary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.faq__mark { flex: none; color: var(--rule-strong); transition: transform 200ms var(--ease-out), color 170ms ease; }
+.faq__mark .i { width: 1.375rem; height: 1.375rem; }
+.faq__item[open] .faq__mark { transform: rotate(45deg); color: var(--emerald); }
+.faq__a { padding: 0 0 var(--r); }
+.faq__a p { margin: 0; color: var(--ink-muted); max-width: 68ch; }
+@media (prefers-reduced-motion: no-preference) {
+  .faq__a { animation: bw-rise 240ms var(--ease-out) both; }
+}
+
+/* ==========================================================================
+   23 · Mockup-matched sections: heading accent, zone cards, compact
+        compliance, faded services photo
+   ========================================================================== */
+
+/* Blue underline accent under a section heading (mockup shows it on Services
+   and Compliance). */
+.section-head--rule > h2::after,
+.cov__head h2.has-rule::after {
+  content: ''; display: block; width: 3rem; height: 4px; border-radius: 2px;
+  background: var(--blue); margin-top: var(--r-h);
+}
+.on-dark .section-head--rule > h2::after { background: #4C9BE8; }
+
+/* --- Services: faded photo behind the header ------------------------------ */
+/* Contained to the intro so it can never bleed down into the card grid. */
+.svc__intro { position: relative; margin-bottom: var(--r-2); }
+.svc__intro .section-head { position: relative; z-index: 1; max-width: 40ch; margin-bottom: 0; }
+.svc__photo { display: none; }
+@media (min-width: 60rem) {
+  .svc__intro { min-height: 23rem; overflow: hidden; }
+  .svc__photo {
+    display: block; position: absolute; inset: 0 0 0 auto;
+    width: 60%; z-index: 0; pointer-events: none;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 42%);
+            mask-image: linear-gradient(90deg, transparent, #000 42%);
+    opacity: 0.85;
+  }
+  .svc__photo picture, .svc__photo img { width: 100%; height: 100%; }
+  /* Framed on the tubes and the temperature readout, which are the subject. */
+  .svc__photo img { object-fit: cover; object-position: 50% 52%; border-radius: 0 6px 6px 0; }
+}
+
+/* --- Compliance: compact four-column ------------------------------------- */
+.comp { position: relative; overflow: hidden; }
+.comp__watermark {
+  position: absolute; top: -3rem; right: -2rem; z-index: 0;
+  width: 22rem; height: 22rem; color: #fff; opacity: 0.05; pointer-events: none;
+}
+.comp__watermark .i { width: 100%; height: 100%; stroke-width: 1; }
+.comp .wrap { position: relative; z-index: 1; }
+.comp__grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--r-2); }
+@media (min-width: 52rem) { .comp__grid { grid-template-columns: repeat(4, 1fr); gap: 0; } }
+.comp__item { text-align: left; }
+@media (min-width: 52rem) {
+  .comp__item { padding-inline: var(--r); border-inline-start: 1px solid var(--on-bond-rule); }
+  .comp__item:first-child { padding-inline-start: 0; border-inline-start: 0; }
+  .comp__item:last-child { padding-inline-end: 0; }
+}
+.comp__item .badge { margin-bottom: var(--r); }
+.comp__item h3 { font-size: var(--t-h3); margin: 0 0 var(--r-q); }
+.comp__item p { font-size: var(--t-sm); color: var(--on-bond-muted); margin: 0; max-width: 34ch; }
+
+/* 18 · Motion (GSAP) =====================================================
+   Paired with assets/js/motion.js. Nothing here does any animating: it only
+   sets up the states GSAP animates out of, plus the few structures GSAP
+   cannot reach on its own (pseudo-elements, masked words).
+   ======================================================================== */
+
+/* --- Pre-entrance hide ---------------------------------------------------
+   `js-motion` is added to <html> by an inline script in <head> and removed
+   again if motion.js never boots, so this can never strand content.
+
+   WARNING: this selector list is duplicated as HIDDEN in motion.js and the
+   two must stay identical. Hidden here but missing there = invisible forever
+   under reduced motion. Listed there but not here = a flash of content before
+   its entrance. Change both or neither. */
+html.js-motion .site-head,
+html.js-motion .hero__bg,
+html.js-motion .hero__copy .display,
+html.js-motion .hero__lead,
+html.js-motion .hero__copy .btn,
+html.js-motion .section-head > *,
+html.js-motion .svc,
+html.js-motion .why__fig,
+html.js-motion .why__body > h2,
+html.js-motion .why__body > p,
+html.js-motion .why__list > li,
+html.js-motion .step,
+html.js-motion .step__num,
+html.js-motion .cov__card,
+html.js-motion .zipcheck,
+html.js-motion .cov__served-grid > li,
+html.js-motion .comp__item,
+html.js-motion .faq__item,
+html.js-motion .quote__head > *,
+html.js-motion .form__row,
+html.js-motion .form__req,
+html.js-motion .form__note,
+html.js-motion .form__submit,
+html.js-motion .site-foot .wrap > *,
+html.js-motion .map__zone,
+html.js-motion .map__hub,
+html.js-motion .map__hub-glow,
+html.js-motion .map__leader,
+html.js-motion .map__chip,
+html.js-motion .map__hub-label { opacity: 0; }
+
+/* The CSS hero animation and the FAQ rise are the no-JS fallback. When GSAP
+   is driving they would fight it, so they are switched off.
+
+   This is keyed to `motion-on`, NOT `js-motion`. motion.js drops `js-motion`
+   the moment it takes over (see the handover note in build() — gsap.from()
+   would otherwise read opacity 0 as its end state) and adds `motion-on`
+   permanently in its place. Keying this rule to the class that gets removed
+   would let the old keyframe animation restart underneath GSAP. */
+html.motion-on .hero__copy > *,
+html.motion-on .hero__media,
+html.motion-on .faq__a { animation: none; }
+
+/* --- Masked words (hero headline) ---------------------------------------
+   motion.js wraps each word so it can rise out of a clipped box. Inline-block
+   is what makes the inner span transformable; the clip is what makes it read
+   as type being set rather than text sliding around. */
+.mask { display: inline-block; overflow: hidden; vertical-align: bottom; }
+.mask__i { display: inline-block; will-change: transform; }
+
+/* --- Animatable step connector -------------------------------------------
+   The connector is a ::before, which GSAP cannot target. Routing its scaleX
+   through a custom property lets motion.js animate `--line` on the step and
+   have the pseudo-element follow.
+
+   `--line` must be DECLARED here, not just used with a var() fallback. GSAP's
+   from() reads the element's current value to use as the animation's end
+   state, and an undeclared custom property reads back as an empty string —
+   which it resolves to 0, so the line animated 0 -> 0 and never appeared. The
+   declaration gives it a real end value, and doubles as the no-JS state. */
+.step { --line: 1; }
+@media (min-width: 52rem) {
+  .step::before { transform-origin: left center; transform: scaleX(var(--line, 1)); }
+}
+
+/* --- FAQ panel ----------------------------------------------------------
+   Height is tweened on open and close, so the panel has to clip its content
+   while it is mid-collapse. */
+.faq__a { overflow: hidden; }
+
+/* --- Header scrolled state ----------------------------------------------
+   Set by ScrollTrigger once the hero is behind the bar. A shadow rather than
+   a size change: resizing a sticky header reflows the page under the reader's
+   cursor, which is the kind of movement this audience should never notice. */
+.site-head { transition: box-shadow 240ms ease, border-color 240ms ease; }
+.site-head.is-stuck {
+  box-shadow: 0 1px 16px rgba(7, 42, 68, 0.13);
+  border-bottom-color: transparent;
+}
+
+/* --- Compositor hints ----------------------------------------------------
+   Only on the handful of elements that are continuously scrubbed. Applying
+   will-change broadly costs memory and can make things slower, not faster. */
+.hero__bg, .hero__copy, .svc__photo, .comp__watermark { will-change: transform; }
+
+/* Under reduced motion nothing is scrubbed, so the compositor hints are just
+   wasted memory. The hide rules need no override here: `js-motion` is removed
+   by motion.js on the reduced-motion branch, by its catch if setup throws, and
+   by the <head> timeout if the file never runs at all. */
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg, .hero__copy, .svc__photo, .comp__watermark { will-change: auto; }
+}
