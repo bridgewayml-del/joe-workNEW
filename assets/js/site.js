@@ -39,7 +39,6 @@
     });
   }
 
-
   /* Footer year -------------------------------------------------------- */
   document.querySelectorAll('#year').forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
@@ -158,6 +157,71 @@
     statusBox.className = 'form__status form__status--' + kind;
     statusBox.innerHTML = html;
     statusBox.hidden = false;
+  }
+
+  /* 3-step mobile form ---------------------------------------------------
+     Mobile-only via CSS (.form__step is only hidden inside the
+     max-width:39.99rem query), but the class is added unconditionally: with
+     JS off, or on desktop, `.form--stepped` sits on the form and does
+     nothing, so the flat/fully-visible/natively-POSTing form stays the
+     default in both cases. Reuses RULES/setError/validate as-is -- Next
+     only validates the fields inside the currently active panel; the final
+     submit handler below still runs the full validate() across all six
+     required fields regardless of which step was last active. */
+  var stepPanels = Array.prototype.slice.call(form.querySelectorAll('.form__step'));
+  if (stepPanels.length) {
+    form.classList.add('form--stepped');
+    var stepBack = form.querySelector('[data-step-back]');
+    var stepNext = form.querySelector('[data-step-next]');
+    var stepStatus = document.getElementById('form-step-status');
+    var stepDots = Array.prototype.slice.call(form.querySelectorAll('.form__steps-progress span'));
+    var activeStep = 0;
+
+    function fieldsInPanel(panel) {
+      return Object.keys(RULES).filter(function (key) {
+        var input = form.elements[key];
+        return input && panel.contains(input);
+      });
+    }
+
+    function renderStep() {
+      stepPanels.forEach(function (panel, i) {
+        panel.classList.toggle('is-active', i === activeStep);
+      });
+      stepDots.forEach(function (dot, i) {
+        dot.classList.toggle('is-active', i === activeStep);
+      });
+      if (stepBack) stepBack.hidden = activeStep === 0;
+      if (stepNext) stepNext.hidden = activeStep === stepPanels.length - 1;
+      if (stepStatus) stepStatus.textContent = 'Step ' + (activeStep + 1) + ' of ' + stepPanels.length;
+    }
+
+    if (stepNext) {
+      stepNext.addEventListener('click', function () {
+        var panel = stepPanels[activeStep];
+        var firstBad = null;
+        fieldsInPanel(panel).forEach(function (key) {
+          var input = form.elements[key];
+          var ok = RULES[key].test(input.value.trim());
+          setError(key, ok ? '' : RULES[key].msg);
+          if (!ok && !firstBad) firstBad = input;
+        });
+        if (firstBad) { firstBad.focus(); return; }
+        if (activeStep < stepPanels.length - 1) activeStep += 1;
+        renderStep();
+        var heading = document.getElementById('quote-h');
+        if (heading) heading.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      });
+    }
+
+    if (stepBack) {
+      stepBack.addEventListener('click', function () {
+        if (activeStep > 0) activeStep -= 1;
+        renderStep();
+      });
+    }
+
+    renderStep();
   }
 
   form.addEventListener('submit', function (event) {

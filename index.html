@@ -48,7 +48,7 @@
 <meta name="theme-color" content="#0B3C5D">
 
 <link rel="preload" href="/assets/fonts/librefranklin-var-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/css/site.css?v=4">
+<link rel="stylesheet" href="/assets/css/site.css?v=5">
 
 <!-- Motion boot. Adding the class here (rather than from motion.js) is what
      prevents a flash of un-animated content: the hide rules apply on the very
@@ -198,10 +198,10 @@
         <h2 id="why-h">Built for medical freight, not parcels</h2>
         <p class="lead muted">A general courier optimises for stops per hour. That is the wrong instinct for a specimen with a stability window.</p>
         <ul class="why__list">
-          <li><svg class="i" aria-hidden="true"><use href="#i-route"></use></svg><div><h3>One courier per run</h3><p>No consolidation, no hand-offs, no warehouse stop where a cooler waits for a second van.</p></div></li>
-          <li><svg class="i" aria-hidden="true"><use href="#i-thermometer"></use></svg><div><h3>Temperature controlled</h3><p>Validated containers with the reading logged for the run and reported with the manifest.</p></div></li>
-          <li><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg><div><h3>Chain of custody</h3><p>Sealed at pickup, signed and timestamped at delivery, the record retained and sent on request.</p></div></li>
-          <li data-verify="pending"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg><div><h3>Bonded and insured</h3><p>Certificate of insurance issued to your facility, named to your entity, renewed before it lapses.</p></div></li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-route"></use></svg><div class="why__text"><h3>One courier per run</h3><p>No consolidation, no hand-offs, no warehouse stop where a cooler waits for a second van.</p></div></li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-thermometer"></use></svg><div class="why__text"><h3>Temperature controlled</h3><p>Validated containers with the reading logged for the run and reported with the manifest.</p></div></li>
+          <li><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg><div class="why__text"><h3>Chain of custody</h3><p>Sealed at pickup, signed and timestamped at delivery, the record retained and sent on request.</p></div></li>
+          <li data-verify="pending"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg><div class="why__text"><h3>Bonded and insured</h3><p>Certificate of insurance issued to your facility, named to your entity, renewed before it lapses.</p></div></li>
         </ul>
       </div>
     </div>
@@ -250,6 +250,7 @@
 
       <div class="cov__layout">
         <figure class="cov__map">
+          <button type="button" class="map__expand" aria-pressed="false">Expand</button>
           <svg class="map__svg" viewBox="0 0 980 700" role="img" aria-labelledby="mapt mapd" xmlns="http://www.w3.org/2000/svg">
 <title id="mapt">Bridgeway service network</title>
 <desc id="mapd">A logistics network map showing New York City -- Manhattan, Brooklyn, Queens, the Bronx and Staten Island -- Nassau and Suffolk Counties on Long Island, and Westchester, Rockland and Putnam Counties, connected by delivery routes between hub markers. Surrounding areas, including northern New Jersey, are shown unshaded for orientation and are not served; the eastern half of Suffolk County extends beyond this view.</desc>
@@ -338,18 +339,22 @@
 </g>
 </svg>
         </figure>
+        <p id="map-tap-out" role="status" aria-live="polite"></p>
 
         <div class="cov__rail">
 
-          <form class="zipcheck" id="zipcheck" novalidate>
-            <label for="zip">Check service availability</label>
-            <div class="zipcheck__row">
-              <input type="text" id="zip" name="zip" inputmode="numeric" autocomplete="postal-code"
-                     maxlength="5" placeholder="Enter ZIP code" aria-describedby="zipout">
-              <button class="btn btn--solid" type="submit">Check Coverage</button>
-            </div>
-            <p class="zipcheck__out" id="zipout" role="status" aria-live="polite"></p>
-          </form>
+          <details class="zipcheck__drawer">
+            <summary>Check service availability</summary>
+            <form class="zipcheck" id="zipcheck" novalidate>
+              <label for="zip">ZIP code</label>
+              <div class="zipcheck__row">
+                <input type="text" id="zip" name="zip" inputmode="numeric" autocomplete="postal-code"
+                       maxlength="5" placeholder="Enter ZIP code" aria-describedby="zipout">
+                <button class="btn btn--solid" type="submit">Check Coverage</button>
+              </div>
+              <p class="zipcheck__out" id="zipout" role="status" aria-live="polite"></p>
+            </form>
+          </details>
 
         </div>
       </div>
@@ -409,12 +414,12 @@
       <div class="section-head section-head--rule">
         <p class="eyebrow"><svg class="i" aria-hidden="true"><use href="#i-shield-check"></use></svg>Compliance and regulations</p><h2 id="comp-h">The rules this work runs under</h2>
       </div>
-      <ul class="comp__grid">
-        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-lock"></use></svg></span><h3>HIPAA Privacy &amp; Security</h3><p>Protected health information in transit: a signed BAA, safeguards, and breach notification that runs back to your facility.</p></li>
-        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-biohazard"></use></svg></span><h3>OSHA Bloodborne Pathogens</h3><p>Written exposure control plan, annual training, protective equipment, and a defined spill and exposure procedure.</p></li>
-        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-box"></use></svg></span><h3>DOT Category B (UN 3373)</h3><p>Triple packaging for diagnostic specimens: leakproof primary and secondary, absorbent, and a marked rigid outer container.</p></li>
-        <li class="comp__item"><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg></span><h3>CLIA Specimen Integrity</h3><p>Your lab sets acceptance and rejection criteria. A broken temperature range or an exceeded stability window is a rejection.</p></li>
-      </ul>
+      <div class="comp__grid">
+        <details class="comp__item"><summary><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-lock"></use></svg></span><h3>HIPAA Privacy &amp; Security</h3></summary><div class="comp__a"><p>Protected health information in transit: a signed BAA, safeguards, and breach notification that runs back to your facility.</p></div></details>
+        <details class="comp__item"><summary><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-biohazard"></use></svg></span><h3>OSHA Bloodborne Pathogens</h3></summary><div class="comp__a"><p>Written exposure control plan, annual training, protective equipment, and a defined spill and exposure procedure.</p></div></details>
+        <details class="comp__item"><summary><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-box"></use></svg></span><h3>DOT Category B (UN 3373)</h3></summary><div class="comp__a"><p>Triple packaging for diagnostic specimens: leakproof primary and secondary, absorbent, and a marked rigid outer container.</p></div></details>
+        <details class="comp__item"><summary><span class="badge"><svg class="i" aria-hidden="true"><use href="#i-clipboard-check"></use></svg></span><h3>CLIA Specimen Integrity</h3></summary><div class="comp__a"><p>Your lab sets acceptance and rejection criteria. A broken temperature range or an exceeded stability window is a rejection.</p></div></details>
+      </div>
     </div>
   </section>
 
@@ -485,109 +490,123 @@
         <input type="hidden" name="rendered_at" value="">
 
         <p class="form__req small muted"><span aria-hidden="true">*</span> Required</p>
+        <p class="form__step-status" id="form-step-status" role="status" aria-live="polite">Step 1 of 3</p>
 
-        <div class="form__row form__row--3">
-          <div class="field">
-            <label for="facility">Facility name <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="facility" name="facility" required autocomplete="organization" aria-describedby="facility-err">
-            <span class="field__error" id="facility-err" role="alert"></span>
+        <div class="form__step is-active" data-step="1">
+          <div class="form__row form__row--3">
+            <div class="field">
+              <label for="pickup">Pickup address <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="pickup" name="pickup" required placeholder="Street, town, dock or suite" aria-describedby="pickup-err">
+              <span class="field__error" id="pickup-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="dropoff">Delivery address <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="dropoff" name="dropoff" required placeholder="Street, town, receiving department" aria-describedby="dropoff-err">
+              <span class="field__error" id="dropoff-err" role="alert"></span>
+            </div>
           </div>
-          <div class="field">
-            <label for="name">Your name and title <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-err">
-            <span class="field__error" id="name-err" role="alert"></span>
-          </div>
-          <div class="field">
-            <label for="email">Work email <span class="req" aria-hidden="true">*</span></label>
-            <input type="email" id="email" name="email" required autocomplete="email" inputmode="email" aria-describedby="email-err">
-            <span class="field__error" id="email-err" role="alert"></span>
-          </div>
-        </div>
-
-        <div class="form__row form__row--3">
-          <div class="field">
-            <label for="phone">Direct phone <span class="req" aria-hidden="true">*</span></label>
-            <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" aria-describedby="phone-err">
-            <span class="field__error" id="phone-err" role="alert"></span>
-          </div>
-          <div class="field">
-            <label for="pickup">Pickup address <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="pickup" name="pickup" required placeholder="Street, town, dock or suite" aria-describedby="pickup-err">
-            <span class="field__error" id="pickup-err" role="alert"></span>
-          </div>
-          <div class="field">
-            <label for="dropoff">Delivery address <span class="req" aria-hidden="true">*</span></label>
-            <input type="text" id="dropoff" name="dropoff" required placeholder="Street, town, receiving department" aria-describedby="dropoff-err">
-            <span class="field__error" id="dropoff-err" role="alert"></span>
-          </div>
-        </div>
-
-        <p class="form__note small muted">
-          Both addresses are required. Distance, river crossing and time of day
-          all change the price, so a pickup ZIP on its own cannot be quoted.
-        </p>
-
-        <div class="form__row form__row--3">
-          <div class="field">
-            <label for="facility_type">Facility type</label>
-            <select id="facility_type" name="facility_type">
-              <option value="">Select one</option>
-              <option>Clinical or reference laboratory</option>
-              <option>Hospital or health system</option>
-              <option>Physician practice or clinic</option>
-              <option>Pharmacy or infusion</option>
-              <option>Dental or specialty practice</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="service">Service needed</label>
-            <select id="service" name="service">
-              <option value="">Select one</option>
-              <option>STAT or emergency run</option>
-              <option>Scheduled lab route</option>
-              <option>Cold-chain or biologics</option>
-              <option>Pharmacy or infusion delivery</option>
-              <option>Records or imaging</option>
-              <option>Equipment or supply transfer</option>
-              <option>More than one, or not sure</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="temperature">Temperature class</label>
-            <select id="temperature" name="temperature">
-              <option value="">Select one</option>
-              <option>Ambient, 15 to 25 C</option>
-              <option>Refrigerated, 2 to 8 C</option>
-              <option>Frozen, -20 C</option>
-              <option>Dry ice</option>
-              <option>Not sure</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form__row form__row--split">
-          <div class="field">
-            <label for="frequency">Volume and frequency</label>
-            <input type="text" id="frequency" name="frequency" placeholder="e.g. two pickups daily, one tote each">
-          </div>
-          <div class="field">
-            <label for="details">Handling notes</label>
-            <textarea id="details" name="details" rows="2"
-              placeholder="Time windows, dock access, container type, after-hours contact."></textarea>
-            <span class="field__hint">Please do not include any patient information here.</span>
-          </div>
-        </div>
-
-        <div class="form__status" id="form-status" role="status" aria-live="polite" hidden></div>
-
-        <div class="form__submit">
-          <button class="btn btn--ghost" type="submit" id="quote-submit">Send request</button>
-          <p class="form__legal">
-            This form is not a secure channel for protected health information.
-            For anything urgent, call dispatch.
+          <p class="form__note small muted">
+            Both addresses are required. Distance, river crossing and time of day
+            all change the price, so a pickup ZIP on its own cannot be quoted.
           </p>
         </div>
+
+        <div class="form__step" data-step="2">
+          <div class="form__row form__row--3">
+            <div class="field">
+              <label for="facility_type">Facility type</label>
+              <select id="facility_type" name="facility_type">
+                <option value="">Select one</option>
+                <option>Clinical or reference laboratory</option>
+                <option>Hospital or health system</option>
+                <option>Physician practice or clinic</option>
+                <option>Pharmacy or infusion</option>
+                <option>Dental or specialty practice</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="service">Service needed</label>
+              <select id="service" name="service">
+                <option value="">Select one</option>
+                <option>STAT or emergency run</option>
+                <option>Scheduled lab route</option>
+                <option>Cold-chain or biologics</option>
+                <option>Pharmacy or infusion delivery</option>
+                <option>Records or imaging</option>
+                <option>Equipment or supply transfer</option>
+                <option>More than one, or not sure</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="temperature">Temperature class</label>
+              <select id="temperature" name="temperature">
+                <option value="">Select one</option>
+                <option>Ambient, 15 to 25 C</option>
+                <option>Refrigerated, 2 to 8 C</option>
+                <option>Frozen, -20 C</option>
+                <option>Dry ice</option>
+                <option>Not sure</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form__row form__row--split">
+            <div class="field">
+              <label for="frequency">Volume and frequency</label>
+              <input type="text" id="frequency" name="frequency" placeholder="e.g. two pickups daily, one tote each">
+            </div>
+            <div class="field">
+              <label for="details">Handling notes</label>
+              <textarea id="details" name="details" rows="2"
+                placeholder="Time windows, dock access, container type, after-hours contact."></textarea>
+              <span class="field__hint">Please do not include any patient information here.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form__step" data-step="3">
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label for="facility">Facility name <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="facility" name="facility" required autocomplete="organization" aria-describedby="facility-err">
+              <span class="field__error" id="facility-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="name">Your name and title <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" required autocomplete="name" aria-describedby="name-err">
+              <span class="field__error" id="name-err" role="alert"></span>
+            </div>
+          </div>
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label for="email">Work email <span class="req" aria-hidden="true">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" inputmode="email" aria-describedby="email-err">
+              <span class="field__error" id="email-err" role="alert"></span>
+            </div>
+            <div class="field">
+              <label for="phone">Direct phone <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" required autocomplete="tel" inputmode="tel" aria-describedby="phone-err">
+              <span class="field__error" id="phone-err" role="alert"></span>
+            </div>
+          </div>
+
+          <div class="form__status" id="form-status" role="status" aria-live="polite" hidden></div>
+
+          <div class="form__submit">
+            <button class="btn btn--ghost" type="submit" id="quote-submit">Send request</button>
+            <p class="form__legal">
+              This form is not a secure channel for protected health information.
+              For anything urgent, call dispatch.
+            </p>
+          </div>
+        </div>
+
+        <div class="form__stepper-nav">
+          <button type="button" class="btn btn--ghost" data-step-back>Back</button>
+          <button type="button" class="btn btn--solid" data-step-next>Next</button>
+        </div>
+        <div class="form__steps-progress" aria-hidden="true"><span class="is-active"></span><span></span><span></span></div>
       </form>
     </div>
   </section>
@@ -601,27 +620,31 @@
         <p class="site-foot__brand">Bridgeway Medical Logistics</p>
         <p>B2B medical courier and specimen transport for laboratories, clinics, hospital systems and pharmacies across New York City, Long Island and the Hudson Valley.</p>
       </div>
-      <div>
-        <h2>Dispatch</h2>
-        <ul>
-          <li><a class="nums" href="tel:+19294545653">(929) 454-5653</a></li>
-          <li><a href="mailto:Info@bridgewayml.com">Info@bridgewayml.com</a></li>
-          <li>178 Columbus Ave<br>New York, NY 10023</li>
-        </ul>
-      </div>
-      <div>
-        <h2>Site</h2>
-        <ul class="ul--split">
-          <li><a href="#services">Services</a></li>
-          <li><a href="#coverage">Coverage</a></li>
-          <li><a href="#why">Why us</a></li>
-          <li><a href="#how">How it works</a></li>
-          <li><a href="#faq">FAQ</a></li>
-          <li><a href="#compliance">Compliance</a></li>
-          <li><a href="/about.html">About</a></li>
-          <li><a href="#quote">Request a quote</a></li>
-        </ul>
-      </div>
+      <details class="site-foot__group" open>
+        <summary><h2>Dispatch</h2></summary>
+        <div class="site-foot__group-body">
+          <ul>
+            <li><a class="nums" href="tel:+19294545653">(929) 454-5653</a></li>
+            <li><a href="mailto:Info@bridgewayml.com">Info@bridgewayml.com</a></li>
+            <li>178 Columbus Ave<br>New York, NY 10023</li>
+          </ul>
+        </div>
+      </details>
+      <details class="site-foot__group">
+        <summary><h2>Site</h2></summary>
+        <div class="site-foot__group-body">
+          <ul class="ul--split">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#coverage">Coverage</a></li>
+            <li><a href="#why">Why us</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#compliance">Compliance</a></li>
+            <li><a href="/about.html">About</a></li>
+            <li><a href="#quote">Request a quote</a></li>
+          </ul>
+        </div>
+      </details>
     </div>
     <div class="site-foot__legal">
       <p>&copy; <span id="year">2026</span> Bridgeway Medical Logistics</p>
@@ -631,10 +654,16 @@
   </div>
 </footer>
 
+<div class="sticky-cta" id="sticky-cta">
+  <a class="btn btn--call" href="tel:+19294545653"><svg class="i" aria-hidden="true"><use href="#i-phone"></use></svg>Call dispatch</a>
+  <a class="btn btn--solid" href="#quote">Request a quote</a>
+</div>
+
 <script src="/assets/js/vendor/gsap.min.js" defer></script>
 <script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
-<script src="/assets/js/site.js?v=2" defer></script>
+<script src="/assets/js/site.js?v=3" defer></script>
 <script src="/assets/js/motion.js" defer></script>
+<script src="/assets/js/mobile-ux.js" defer></script>
 
 <script type="application/ld+json">
 {

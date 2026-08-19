@@ -111,7 +111,7 @@
   --container: 72rem;   /* 1152 */
   --half:      36rem;
 
-  --z-nav: 30; --z-overlay: 40;   /* only two layers exist on this site */
+  --z-nav: 30; --z-cta: 35; --z-overlay: 40;   /* three layers exist on this site */
   /* Curves cited in review-animations/STANDARDS.md. Built-in CSS easings are
      too weak to read as intentional. Hover and colour changes use plain
      `ease` per the decision order; entering elements use the strong ease-out. */
@@ -211,6 +211,7 @@ p:last-child { margin-bottom: 0; }
 .lead { font-size: var(--t-lead); line-height: 1.5; max-width: 62ch; }
 .muted { color: var(--ink-muted); }
 .small { font-size: var(--t-sm); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 /* Numbers align in columns without a monospace family. */
 .nums { font-variant-numeric: tabular-nums; }
@@ -342,7 +343,7 @@ a:hover { color: var(--bond-800); }
    is opaque enough on the left that legibility does not depend on the photo,
    which matters because the left of this photo is a white van. */
 
-.hero { position: relative; isolation: isolate; background: var(--bond-900); }
+.hero { position: relative; isolation: isolate; overflow: hidden; background: var(--bond-900); }
 .hero__bg { position: absolute; inset: 0; z-index: 0; }
 .hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
 /* Scrim: near-opaque navy on the left, clearing toward the right where the
@@ -514,7 +515,6 @@ a:hover { color: var(--bond-800); }
   color: var(--ink); line-height: 1.4;
 }
 
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .founder { display: grid; gap: var(--r-2); align-items: start; }
 @media (min-width: 58rem) { .founder { grid-template-columns: 1.25fr 0.75fr; gap: var(--r-3); } }
 .founder__prose > * + * { margin-top: var(--r); }
@@ -885,6 +885,7 @@ a:hover { color: var(--bond-800); }
 .why__list { list-style: none; margin: var(--r) 0 0; padding: 0; display: grid; gap: var(--r); }
 .why__list li { display: flex; gap: var(--r-h); align-items: flex-start; }
 .why__list .i { color: var(--blue-dark); width: 1.5rem; height: 1.5rem; flex: none; margin-top: 0.15em; }
+.why__list .why__text { min-width: 0; }
 .why__list h3 { margin: 0 0 0.15rem; font-size: var(--t-h3); }
 .why__list p { margin: 0; font-size: var(--t-sm); color: var(--ink-muted); max-width: 44ch; }
 
@@ -1067,6 +1068,10 @@ html.motion-on .faq__a { animation: none; }
    while it is mid-collapse. */
 .faq__a { overflow: hidden; }
 
+/* Same GSAP height-tween treatment, reused by the Compliance and ZIP-drawer
+   accordions (motion.js accordionize()). */
+.comp__a, .zipcheck__drawer .zipcheck { overflow: hidden; }
+
 /* --- Header scrolled state ----------------------------------------------
    Set by ScrollTrigger once the hero is behind the bar. A shadow rather than
    a size change: resizing a sticky header reflows the page under the reader's
@@ -1088,4 +1093,239 @@ html.motion-on .faq__a { animation: none; }
    by the <head> timeout if the file never runs at all. */
 @media (prefers-reduced-motion: reduce) {
   .hero__bg, .hero__copy, .svc__photo, .comp__watermark { will-change: auto; }
+}
+
+/* 19 · Mobile carousels, accordions, stepper form, sticky CTA ============
+   Everything below is gated at the site's existing mobile cutoff
+   (max-width: 39.99rem, see the hero override in section 08) or its
+   min-width: 40rem complement. Nothing here touches any other breakpoint.
+   ID-scoped where a class is shared with about.html (.svc__grid). ========= */
+
+/* --- Carousels (scroll-snap, no JS) --------------------------------------
+   `min-width: 0` on every card is load-bearing, not decoration: several
+   cards contain a `ch`-based max-width (.svc > p, .why__list p) that will
+   fight a flex item's content-based min size exactly the way it fought
+   .why__text before overflow:hidden/min-width:0 landed on the hero and
+   why-list (see git history) — omit it here and the same bug returns.
+
+   Deliberately NOT edge-to-edge (no negative-margin bleed): the carousels
+   sit at different nesting depths under `.wrap` (Services/Steps are direct
+   children; Why-list is inside `.why__body`). A bleed technique that
+   assumes "parent has padding-inline: var(--gutter)" only holds for a
+   direct child — nested one, it just shifts the overflow outward instead
+   of to the viewport edge, and for a flex/grid ancestor without an explicit
+   track size it can blow the whole ancestor chain out to page-level
+   horizontal scroll. Cards scroll within the existing padded column
+   instead; `min-width: 0` on every card is still required regardless.
+   (Coverage's own `.cov__layout`/`.cov__map` already guard against this
+   same grid-blowout via `minmax(0, 1fr)` — see section 20 — so its
+   carousels below don't need an extra min-width:0 patch.) */
+.carousel__dots { display: none; }
+@media (max-width: 39.99rem) {
+  #services .svc__grid, #coverage .cov__cards, #coverage .cov__served-grid, #why .why__list, #how .steps {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; padding-bottom: 0.25rem;
+  }
+  #services .svc__grid { gap: 0.875rem; }
+  #services .svc__grid .svc { flex: 0 0 85%; min-width: 0; scroll-snap-align: start; }
+
+  /* Coverage region cards (NYC / Long Island / Hudson Valley) -- only 3, so
+     a slightly wider peek than the 6-card Services row reads better. */
+  #coverage .cov__cards { gap: var(--r-h); }
+  #coverage .cov__cards .cov__card { flex: 0 0 78%; min-width: 0; scroll-snap-align: start; }
+
+  /* "We serve" facility directory (12 short icon+label rows) -- reads
+     better as a horizontal chip strip on mobile than a divided list users
+     have to scroll the whole page to get through. */
+  #coverage .cov__served-grid { gap: 0.625rem; list-style: none; }
+  #coverage .cov__served-grid li {
+    flex: 0 0 auto; min-width: 0; scroll-snap-align: start;
+    border-bottom: 0; border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.5rem 0.9rem; white-space: nowrap;
+  }
+
+  #why .why__list { gap: var(--r); }
+  #why .why__list > li { flex: 0 0 88%; min-width: 0; scroll-snap-align: start; }
+  /* .why__body is a CSS Grid item (of .why__grid, single-column below
+     56rem) with no minmax(0, ...) guard, so it needs its own min-width:0 --
+     same grid-blowout risk described above, just without Coverage's fix
+     already in place upstream. */
+  #why .why__body { min-width: 0; }
+
+  #how .steps { gap: var(--r); }
+  #how .steps .step { flex: 0 0 78%; min-width: 0; scroll-snap-align: start; }
+
+  /* Dot indicators (Services, Steps only — see mobile-ux.js). Decorative;
+     the scroll track itself is the source of truth. */
+  .carousel__dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: var(--r-h); }
+  .carousel__dots button {
+    width: 0.4375rem; height: 0.4375rem; padding: 0; border: 0; border-radius: 50%;
+    background: var(--rule-strong); opacity: 0.5;
+  }
+  .carousel__dots button.is-active { background: var(--blue-dark); opacity: 1; }
+}
+
+/* --- Accordions (native <details>, force-open on desktop) ---------------
+   pointer-events: none on <summary> means the desktop click that toggles
+   <details> can never fire — this is what keeps desktop unaffected even
+   with JS disabled, no media-query listener needed. */
+.comp__item[open] { /* no-op: selector kept for clarity, native marker handles state */ }
+.comp__item summary, .zipcheck__drawer summary, .site-foot__group summary {
+  cursor: pointer; list-style: none;
+}
+.comp__item summary::-webkit-details-marker,
+.zipcheck__drawer summary::-webkit-details-marker,
+.site-foot__group summary::-webkit-details-marker { display: none; }
+@media (min-width: 40rem) {
+  .comp__item summary, .zipcheck__drawer summary, .site-foot__group summary {
+    pointer-events: none;
+  }
+  .comp__item .comp__a, .zipcheck__drawer .zipcheck, .site-foot__group .site-foot__group-body {
+    display: block !important;
+  }
+}
+
+@media (max-width: 39.99rem) {
+  .comp__grid { display: block; }
+  .comp__item {
+    border-bottom: 1px solid var(--on-bond-rule); padding-block: var(--r-h);
+  }
+  .comp__item summary { display: flex; align-items: center; gap: var(--r-h); }
+  .comp__item summary h3 { margin: 0; flex: 1; }
+  .comp__item summary::after {
+    content: ''; width: 0.6rem; height: 0.6rem; flex: none;
+    border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: rotate(45deg); transition: transform 200ms var(--ease-out);
+  }
+  .comp__item[open] summary::after { transform: rotate(-135deg); }
+  .comp__item .comp__a { padding-top: var(--r-h); margin: 0; }
+  .comp__item .badge { margin-bottom: 0; }
+
+  /* .zipcheck (section 20) is already styled as its own bordered card --
+     the drawer becomes the single outer card instead of wrapping a second
+     one around it: summary is the header row, and .zipcheck's own
+     border/shadow are suppressed in favour of one divider between them. */
+  .zipcheck__drawer { border: 1px solid var(--rule); border-radius: 8px; overflow: hidden; }
+  .zipcheck__drawer summary {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--r-h);
+    padding: var(--r) var(--r);
+    font-weight: 700; color: var(--ink);
+  }
+  .zipcheck__drawer summary::after {
+    content: ''; width: 0.55rem; height: 0.55rem; flex: none;
+    border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg); transition: transform 200ms var(--ease-out);
+  }
+  .zipcheck__drawer[open] summary::after { transform: rotate(-135deg); }
+  .zipcheck__drawer .zipcheck {
+    margin: 0; border: 0; border-radius: 0; box-shadow: none;
+    border-top: 1px solid var(--rule);
+  }
+
+  .site-foot { padding-block: var(--r) var(--r-h); }
+  .site-foot__group { border-top: 1px solid var(--rule); padding-block: var(--r-h); }
+  .site-foot__group summary { display: flex; align-items: center; justify-content: space-between; }
+  .site-foot__group summary h2 { margin: 0; }
+  .site-foot__group summary::after {
+    content: ''; width: 0.5rem; height: 0.5rem; flex: none;
+    border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+    transform: rotate(45deg); transition: transform 200ms var(--ease-out);
+  }
+  .site-foot__group[open] summary::after { transform: rotate(-135deg); }
+  .site-foot__group-body { padding-top: var(--r-h); }
+}
+
+/* --- Interactive coverage map ---------------------------------------------
+   Purely additive: existing hover-highlight (canHover-gated, motion.js)
+   is untouched, this is the touch-only counterpart. */
+.map__expand, #map-tap-out { display: none; }
+@media (max-width: 39.99rem) {
+  /* Clips the expanded map to the section column instead of letting the
+     scale() transform push document scrollWidth past the viewport — the
+     same failure mode the hero's overflow:hidden fix (see git history)
+     guards against. */
+  #coverage .cov__layout { overflow-x: hidden; }
+  .cov__map { position: relative; transition: transform 260ms var(--ease-out); }
+  .cov__map.is-expanded { transform: scale(1.35); transform-origin: center top; z-index: 1; }
+  .map__zone { transition: fill 160ms var(--ease); cursor: pointer; }
+  .map__zone.is-active { fill: var(--blue); }
+  .map__expand {
+    display: block;
+    position: absolute; top: 0.5rem; right: 0.5rem; z-index: 2;
+    min-height: 2.25rem; padding: 0.4rem 0.75rem;
+    background: #fff; border: 1px solid var(--rule); border-radius: 999px;
+    font-size: var(--t-xs); font-weight: 700; color: var(--ink);
+  }
+  #map-tap-out {
+    display: block;
+    min-height: 1.4em; margin: var(--r-h) 0 0; font-size: var(--t-sm); font-weight: 700; color: var(--blue-dark);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cov__map.is-expanded { transform: none; }
+}
+
+/* --- 3-step quote form -----------------------------------------------------
+   The display:none rule is nested INSIDE the mobile query on purpose: JS
+   adds `form--stepped` unconditionally, but only mobile actually hides the
+   inactive panels, so desktop needs no matchMedia listener to stay flat. */
+.form__stepper-nav, .form__steps-progress { display: none; }
+/* Kept in the accessibility tree (not display:none) so its aria-live
+   announcements still fire on desktop/no-JS, just off-screen visually. */
+.form__step-status {
+  position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; padding: 0;
+}
+@media (max-width: 39.99rem) {
+  .form--stepped .form__step { display: none; }
+  .form--stepped .form__step.is-active { display: grid; gap: 1.25rem; }
+  .form--stepped .form__stepper-nav {
+    display: flex; gap: var(--r-h); margin-top: 0.25rem;
+  }
+  .form--stepped .form__stepper-nav .btn { flex: 1 1 0; }
+  .form--stepped .form__steps-progress {
+    display: flex; justify-content: center; gap: 0.4rem; margin-top: var(--r-h);
+  }
+  .form__steps-progress span {
+    width: 1.5rem; height: 0.25rem; border-radius: 999px;
+    background: var(--on-bond-rule);
+  }
+  .form__steps-progress span.is-active { background: #fff; }
+}
+
+/* --- Sticky bottom CTA ----------------------------------------------------- */
+.sticky-cta { display: none; }
+@media (max-width: 39.99rem) {
+  .sticky-cta {
+    display: flex; gap: var(--r-h);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-cta);
+    padding: var(--r-h) var(--gutter);
+    padding-bottom: calc(var(--r-h) + env(safe-area-inset-bottom, 0px));
+    background: var(--paper); border-top: 1px solid var(--rule);
+    box-shadow: 0 -2px 8px rgba(11, 60, 93, 0.08);
+    transition: transform 220ms var(--ease-out);
+  }
+  /* .btn's default padding (var(--r-2), 36px) and white-space:nowrap are
+     sized for a single hero-scale button, not two side by side in a
+     gutter-width bar. min-width:0 is required for the same reason as the
+     carousel cards above: a nowrap flex item's default min-width:auto is
+     its full text width, which two of these together exceed the bar's
+     available width. */
+  .sticky-cta > .btn {
+    flex: 1 1 0; min-width: 0;
+    padding: 0.6rem 0.5rem; min-height: 2.75rem;
+    font-size: var(--t-sm);
+  }
+  .sticky-cta.is-hidden { transform: translateY(100%); }
+  body:has(.sticky-cta) { padding-bottom: 4.75rem; }
+
+  /* Same nowrap-button overflow as the sticky CTA above: .cov__cta .btn is
+     `flex: none` (section 20), so it never shrinks below its full "Request
+     custom route" text width -- at 320px that's wider than the space left
+     beside the banner copy. Drop it to its own full-width row instead;
+     .cov__cta already has flex-wrap: wrap. */
+  .cov__cta .btn {
+    flex: 1 1 100%; justify-content: center; text-align: center;
+    white-space: normal; padding-inline: var(--r);
+  }
 }
