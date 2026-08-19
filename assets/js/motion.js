@@ -533,48 +533,57 @@
         });
       }
 
-      /* --- 07 · Click: FAQ accordion and button press -------------------- */
+      /* --- 07 · Click: accordions and button press ------------------------ */
 
       /* <details> gives correct semantics and keyboard behaviour for free, but
          it cannot animate: the browser flips display outright. So the click is
          intercepted, the height is tweened, and `open` is set at the right end
          of the tween — closing after the collapse, opening before the expand.
-         Keyboard Enter/Space fire `click` on <summary>, so this covers both. */
-      qa('.faq__item').forEach(function (item) {
-        var summary = q('summary', item);
-        var panel = q('.faq__a', item);
-        if (!summary || !panel) return;
-        var anim;
+         Keyboard Enter/Space fire `click` on <summary>, so this covers both.
+         Shared by FAQ (existing), Compliance, and the ZIP-checker drawer
+         (both new, mobile-only) — `panelSelector` is the child that holds the
+         collapsible content in each case. */
+      function accordionize(itemSelector, panelSelector) {
+        qa(itemSelector).forEach(function (item) {
+          var summary = q('summary', item);
+          var panel = q(panelSelector, item);
+          if (!summary || !panel) return;
+          var anim;
 
-        summary.addEventListener('click', function (event) {
-          event.preventDefault();
-          if (anim) anim.kill();
+          summary.addEventListener('click', function (event) {
+            event.preventDefault();
+            if (anim) anim.kill();
 
-          if (!item.open) {
-            item.open = true;
-            anim = gsap.timeline();
-            anim.from(panel, {
-              height: 0, opacity: 0, duration: 0.42, ease: 'power2.out',
-              onComplete: function () { gsap.set(panel, { clearProps: 'height' }); }
-            });
-            anim.from(panel.children, {
-              y: 12, opacity: 0, duration: 0.4, stagger: 0.06
-            }, 0.1);
-          } else {
-            anim = gsap.to(panel, {
-              height: 0, opacity: 0, duration: 0.32, ease: 'power2.in',
-              onComplete: function () {
-                item.open = false;
-                gsap.set(panel, { clearProps: 'height,opacity' });
-              }
-            });
-          }
+            if (!item.open) {
+              item.open = true;
+              anim = gsap.timeline();
+              anim.from(panel, {
+                height: 0, opacity: 0, duration: 0.42, ease: 'power2.out',
+                onComplete: function () { gsap.set(panel, { clearProps: 'height' }); }
+              });
+              anim.from(panel.children, {
+                y: 12, opacity: 0, duration: 0.4, stagger: 0.06
+              }, 0.1);
+            } else {
+              anim = gsap.to(panel, {
+                height: 0, opacity: 0, duration: 0.32, ease: 'power2.in',
+                onComplete: function () {
+                  item.open = false;
+                  gsap.set(panel, { clearProps: 'height,opacity' });
+                }
+              });
+            }
+          });
         });
-      });
+      }
+
+      accordionize('.faq__item', '.faq__a');
+      accordionize('.comp__item', '.comp__a');
+      accordionize('.zipcheck__drawer', '.zipcheck');
 
       /* Press feedback. Pointer events rather than mousedown so it also fires
          under touch, where there is no hover state to carry the feedback. */
-      qa('.btn, .cov__card, .faq__item summary').forEach(function (el) {
+      qa('.btn, .cov__card, .faq__item summary, .comp__item summary, .zipcheck__drawer summary, .site-foot__group summary').forEach(function (el) {
         var to = gsap.quickTo(el, 'scale', { duration: 0.18, ease: 'power2.out' });
         el.addEventListener('pointerdown', function () { to(0.97); });
         ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (evt) {
